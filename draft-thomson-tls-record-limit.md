@@ -112,13 +112,11 @@ record sizes.
 
 # The "record_size_limit" Extension {#max-record}
 
-The ExtensionData of the `record_size_limit` extension is RecordSizeLimit, as
-shown in {{def}}.
+The ExtensionData of the `record_size_limit` extension is RecordSizeLimit:
 
-```
-uint16 RecordSizeLimit;
-```
-{: #def}
+~~~
+   uint16 RecordSizeLimit;
+~~~
 
 The value of RecordSizeLimit is the maximum size of record that the endpoint is
 willing to receive.  When the `record_size_limit` extension is negotiated, an
