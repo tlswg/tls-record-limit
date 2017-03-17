@@ -181,7 +181,8 @@ Internet-Draft              TLS Record Limit                  March 2017
    endpoint is willing to receive.  When the "record_size_limit"
    extension is negotiated, an endpoint MUST NOT generate a protected
    record with plaintext that is larger than the RecordSizeLimit value
-   it receives from its peer.
+   it receives from its peer.  Unprotected messages - handshake messages
+   in particular - are not subject to this limit.
 
    This value is the size of the plaintext of a protected record.  The
    value includes the content type and padding added in TLS 1.3 (that
@@ -215,9 +216,8 @@ Internet-Draft              TLS Record Limit                  March 2017
    negotiated, endpoints can send records of any size permitted by the
    protocol or other negotiated extensions.
 
-   Endpoints MUST NOT send a "record_size_limit" extension with a value
-   smaller than 64.  An endpoint MUST treat receipt of a smaller value
-   as a fatal error and generate an "illegal_parameter" alert.
+
+
 
 
 
@@ -225,6 +225,10 @@ Thomson                Expires September 18, 2017               [Page 4]
 
 Internet-Draft              TLS Record Limit                  March 2017
 
+
+   Endpoints MUST NOT send a "record_size_limit" extension with a value
+   smaller than 64.  An endpoint MUST treat receipt of a smaller value
+   as a fatal error and generate an "illegal_parameter" alert.
 
    In TLS 1.3, the server sends the "record_size_limit" extension in the
    EncryptedExtensions message.
@@ -268,10 +272,6 @@ Internet-Draft              TLS Record Limit                  March 2017
               DOI 10.17487/RFC2119, March 1997,
               <http://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
-              (TLS) Protocol Version 1.2", RFC 5246,
-              DOI 10.17487/RFC5246, August 2008,
-              <http://www.rfc-editor.org/info/rfc5246>.
 
 
 
@@ -281,6 +281,11 @@ Thomson                Expires September 18, 2017               [Page 5]
 
 Internet-Draft              TLS Record Limit                  March 2017
 
+
+   [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
+              (TLS) Protocol Version 1.2", RFC 5246,
+              DOI 10.17487/RFC5246, August 2008,
+              <http://www.rfc-editor.org/info/rfc5246>.
 
 8.2.  Informative References
 
@@ -309,11 +314,6 @@ Author's Address
    Mozilla
 
    Email: martin.thomson@gmail.com
-
-
-
-
-
 
 
 
