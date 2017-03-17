@@ -160,13 +160,14 @@ In TLS 1.3, the server sends the `record_size_limit` extension in the
 EncryptedExtensions message.
 
 
-# Obsoleting "max_fragment_length"
+# Deprecating "max_fragment_length"
 
-The `record_size_limit` extension replaces the `max_fragment_length`.  A server
-that supports `record_size_limit` MUST ignore `max_fragment_length` if both
-extensions appear in a ClientHello.  A client MUST treat receipt of both
-`max_fragment_length` and `record_size_limit` as a fatal error, and SHOULD
-generate an "illegal_parameter" alert.
+The `record_size_limit` extension replaces the `max_fragment_length` extension.
+A server that supports the `record_size_limit` extension MUST ignore and
+`max_fragment_length` that appears in a ClientHello if both extensions appear.
+A client MUST treat receipt of both `max_fragment_length` and
+`record_size_limit` as a fatal error, and SHOULD generate an "illegal_parameter"
+alert.
 
 Clients that depend on having a small record size MAY continue to advertise the
 `max_fragment_length`.
