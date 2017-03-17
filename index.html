@@ -281,7 +281,7 @@ address {
 <link href="#rfc.section.2" rel="Chapter" title="2 Conventions and Definitions"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 Limitations of the &#x201C;max_fragment_length&#x201D; Extension"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 The &#x201C;record_size_limit&#x201D; Extension"/>
-<link href="#rfc.section.5" rel="Chapter" title="5 Obsoleting &#x201C;max_fragment_length&#x201D;"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Deprecating &#x201C;max_fragment_length&#x201D;"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 Security Considerations"/>
 <link href="#rfc.section.7" rel="Chapter" title="7 IANA Considerations"/>
 <link href="#rfc.references" rel="Chapter" title="8 References"/>
@@ -360,7 +360,7 @@ address {
 <li>2.   <a href="#rfc.section.2">Conventions and Definitions</a></li>
 <li>3.   <a href="#rfc.section.3">Limitations of the &#8220;max_fragment_length&#8221; Extension</a></li>
 <li>4.   <a href="#rfc.section.4">The &#8220;record_size_limit&#8221; Extension</a></li>
-<li>5.   <a href="#rfc.section.5">Obsoleting &#8220;max_fragment_length&#8221;</a></li>
+<li>5.   <a href="#rfc.section.5">Deprecating &#8220;max_fragment_length&#8221;</a></li>
 <li>6.   <a href="#rfc.section.6">Security Considerations</a></li>
 <li>7.   <a href="#rfc.section.7">IANA Considerations</a></li>
 <li>8.   <a href="#rfc.references">References</a></li>
@@ -400,8 +400,8 @@ address {
 <p id="rfc.section.4.p.8">Clients SHOULD advertise the <samp>record_size_limit</samp> extension, even if they have no need to limit the size of records.  This allows servers to apply a limit at their discretion.  If this extension is not negotiated, endpoints can send records of any size permitted by the protocol or other negotiated extensions.</p>
 <p id="rfc.section.4.p.9">Endpoints MUST NOT send a <samp>record_size_limit</samp> extension with a value smaller than 64.  An endpoint MUST treat receipt of a smaller value as a fatal error and generate an &#8220;illegal_parameter&#8221; alert.</p>
 <p id="rfc.section.4.p.10">In TLS 1.3, the server sends the <samp>record_size_limit</samp> extension in the EncryptedExtensions message.</p>
-<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#obsoleting-maxfragmentlength" id="obsoleting-maxfragmentlength">Obsoleting &#8220;max_fragment_length&#8221;</a></h1>
-<p id="rfc.section.5.p.1">The <samp>record_size_limit</samp> extension replaces the <samp>max_fragment_length</samp>.  A server that supports <samp>record_size_limit</samp> MUST ignore <samp>max_fragment_length</samp> if both extensions appear in a ClientHello.  A client MUST treat receipt of both <samp>max_fragment_length</samp> and <samp>record_size_limit</samp> as a fatal error, and SHOULD generate an &#8220;illegal_parameter&#8221; alert.</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#deprecating-maxfragmentlength" id="deprecating-maxfragmentlength">Deprecating &#8220;max_fragment_length&#8221;</a></h1>
+<p id="rfc.section.5.p.1">The <samp>record_size_limit</samp> extension replaces the <samp>max_fragment_length</samp> extension.  A server that supports the <samp>record_size_limit</samp> extension MUST ignore and <samp>max_fragment_length</samp> that appears in a ClientHello if both extensions appear.  A client MUST treat receipt of both <samp>max_fragment_length</samp> and <samp>record_size_limit</samp> as a fatal error, and SHOULD generate an &#8220;illegal_parameter&#8221; alert.</p>
 <p id="rfc.section.5.p.2">Clients that depend on having a small record size MAY continue to advertise the <samp>max_fragment_length</samp>.</p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.6.p.1">Very small record sizes might generate additional work for senders and receivers, limiting throughput and increasing exposure to denial of service.</p>
