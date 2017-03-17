@@ -120,9 +120,10 @@ uint16 RecordSizeLimit;
 ```
 {: #def}
 
-The value of the extension is the maximum size of record that the endpoint is
-willing to receive.  When negotiated, an endpoint MUST NOT generate a protected
-record with plaintext that is larger than the value it receives from its peer.
+The value of RecordSizeLimit is the maximum size of record that the endpoint is
+willing to receive.  When the `record_size_limit` extension is negotiated, an
+endpoint MUST NOT generate a protected record with plaintext that is larger than
+the RecordSizeLimit value it receives from its peer.
 
 This value is the size of the plaintext of a protected record.  The value
 includes the content type and padding added in TLS 1.3 (that is, the complete
@@ -136,8 +137,8 @@ records than the protocol permits.  An endpoint that receives a value larger
 than the maximum defined in the protocol MUST NOT exceed protocol-defined
 limits.  For TLS 1.3 and earlier, this limit is 2^14 octets.
 
-The size limit expressed in the `record_size_limit` doesn't account for
-expansion due to compression or record protection.  It is expected that a
+The size limit expressed in the `record_size_limit` extension doesn't account
+for expansion due to compression or record protection.  It is expected that a
 constrained device will disable compression and know - and account for - the
 maximum expansion possible due to record protection based on the cipher suites
 it offers or selects.  Note that up to 256 octets of padding and padding length
