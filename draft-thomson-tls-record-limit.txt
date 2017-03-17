@@ -173,9 +173,9 @@ Internet-Draft              TLS Record Limit                  March 2017
 4.  The "record_size_limit" Extension
 
    The ExtensionData of the "record_size_limit" extension is
-   RecordSizeLimit, as shown in Section 4, Paragraph 2.
+   RecordSizeLimit:
 
-   "uint16 RecordSizeLimit; "
+      uint16 RecordSizeLimit;
 
    The value of RecordSizeLimit is the maximum size of record that the
    endpoint is willing to receive.  When the "record_size_limit"
