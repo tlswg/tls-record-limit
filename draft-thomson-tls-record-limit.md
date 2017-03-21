@@ -129,12 +129,16 @@ includes the content type and padding added in TLS 1.3 (that is, the complete
 length of TLSInnerPlaintext).  Padding added as part of encryption, such as that
 added by a block cipher, is not included in this count.
 
-An endpoint that has no limit on the size of data they receive can set this
-value to any value equal to or greater than the maximum possible record size,
-such as 65535.  A larger value does not allow the endpoint to send larger
-records than the protocol permits.  An endpoint that receives a value larger
-than the maximum defined in the protocol MUST NOT exceed protocol-defined
-limits.  For TLS 1.3 and earlier, this limit is 2^14 octets.
+An endpoint that supports all record sizes can include any limit up to the
+protocol-defined limit for maximum record size.  For TLS 1.3 and earlier, that
+limit is 2^14 octets.  Higher values are currently reserved for future versions
+of the protocol that may allow larger records; an endpoint MUST NOT send a value
+higher than the protocol-defined maximum record size unless explicitly allowed
+by such a future version or extension.
+
+Even if a larger record size limit is provided by a peer, an endpoint MUST NOT
+send records larger than the protocol-defined limit, unless explicitly allowed
+by a future TLS version or extension.
 
 The size limit expressed in the `record_size_limit` extension doesn't account
 for expansion due to compression or record protection.  It is expected that a
