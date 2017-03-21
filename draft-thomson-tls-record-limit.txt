@@ -4,9 +4,9 @@
 
 TLS                                                           M. Thomson
 Internet-Draft                                                   Mozilla
-Updates: 6066 (if approved)                               March 17, 2017
+Updates: 6066 (if approved)                               March 21, 2017
 Intended status: Standards Track
-Expires: September 18, 2017
+Expires: September 22, 2017
 
 
      Record Size Limit Extension for Transport Layer Security (TLS)
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 18, 2017.
+   This Internet-Draft will expire on September 22, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thomson                Expires September 18, 2017               [Page 1]
+Thomson                Expires September 22, 2017               [Page 1]
 
 Internet-Draft              TLS Record Limit                  March 2017
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Thomson                Expires September 18, 2017               [Page 2]
+Thomson                Expires September 22, 2017               [Page 2]
 
 Internet-Draft              TLS Record Limit                  March 2017
 
@@ -165,7 +165,7 @@ Internet-Draft              TLS Record Limit                  March 2017
 
 
 
-Thomson                Expires September 18, 2017               [Page 3]
+Thomson                Expires September 22, 2017               [Page 3]
 
 Internet-Draft              TLS Record Limit                  March 2017
 
@@ -190,13 +190,17 @@ Internet-Draft              TLS Record Limit                  March 2017
    of encryption, such as that added by a block cipher, is not included
    in this count.
 
-   An endpoint that has no limit on the size of data they receive can
-   set this value to any value equal to or greater than the maximum
-   possible record size, such as 65535.  A larger value does not allow
-   the endpoint to send larger records than the protocol permits.  An
-   endpoint that receives a value larger than the maximum defined in the
-   protocol MUST NOT exceed protocol-defined limits.  For TLS 1.3 and
-   earlier, this limit is 2^14 octets.
+   An endpoint that supports all record sizes can include any limit up
+   to the protocol-defined limit for maximum record size.  For TLS 1.3
+   and earlier, that limit is 2^14 octets.  Higher values are currently
+   reserved for future versions of the protocol that may allow larger
+   records; an endpoint MUST NOT send a value higher than the protocol-
+   defined maximum record size unless explicitly allowed by such a
+   future version or extension.
+
+   Even if a larger record size limit is provided by a peer, an endpoint
+   MUST NOT send records larger than the protocol-defined limit, unless
+   explicitly allowed by a future TLS version or extension.
 
    The size limit expressed in the "record_size_limit" extension doesn't
    account for expansion due to compression or record protection.  It is
@@ -213,18 +217,17 @@ Internet-Draft              TLS Record Limit                  March 2017
    Clients SHOULD advertise the "record_size_limit" extension, even if
    they have no need to limit the size of records.  This allows servers
    to apply a limit at their discretion.  If this extension is not
-   negotiated, endpoints can send records of any size permitted by the
-   protocol or other negotiated extensions.
 
 
 
 
-
-
-Thomson                Expires September 18, 2017               [Page 4]
+Thomson                Expires September 22, 2017               [Page 4]
 
 Internet-Draft              TLS Record Limit                  March 2017
 
+
+   negotiated, endpoints can send records of any size permitted by the
+   protocol or other negotiated extensions.
 
    Endpoints MUST NOT send a "record_size_limit" extension with a value
    smaller than 64.  An endpoint MUST treat receipt of a smaller value
@@ -274,10 +277,7 @@ Internet-Draft              TLS Record Limit                  March 2017
 
 
 
-
-
-
-Thomson                Expires September 18, 2017               [Page 5]
+Thomson                Expires September 22, 2017               [Page 5]
 
 Internet-Draft              TLS Record Limit                  March 2017
 
@@ -333,4 +333,4 @@ Author's Address
 
 
 
-Thomson                Expires September 18, 2017               [Page 6]
+Thomson                Expires September 22, 2017               [Page 6]
