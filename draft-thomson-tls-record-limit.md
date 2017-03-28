@@ -124,10 +124,10 @@ endpoint MUST NOT generate a protected record with plaintext that is larger than
 the RecordSizeLimit value it receives from its peer.  Unprotected messages -
 handshake messages in particular - are not subject to this limit.
 
-This value is the size of the plaintext of a protected record.  The value
-includes the content type and padding added in TLS 1.3 (that is, the complete
-length of TLSInnerPlaintext).  Padding added as part of encryption, such as that
-added by a block cipher, is not included in this count.
+The size limit value governs the length of the plaintext of a protected record.
+The value includes the content type and padding added in TLS 1.3 (that is, the
+complete length of TLSInnerPlaintext).  Padding added as part of encryption,
+such as that added by a block cipher, is not included in this count.
 
 An endpoint that supports all record sizes can include any limit up to the
 protocol-defined limit for maximum record size.  For TLS 1.3 and earlier, that
