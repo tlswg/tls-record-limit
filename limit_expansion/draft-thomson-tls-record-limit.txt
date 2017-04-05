@@ -245,15 +245,15 @@ Internet-Draft              TLS Record Limit                  April 2017
 
    For example, TLS_RSA_WITH_AES_128_CBC_SHA has 16 octet blocks and a
    20 octet MAC.  Given a record size limit of 256, a record of that
-   length would require 11 octets of padding (for [RFC5246] where the
-   MAC is covered by encryption); or 15 octets if the "encrypt_then_mac"
-   extension [RFC7366] is negotiated.  A record with 250 octets of
-   plaintext could be padded to the same length by including 17 octets
-   of padding; or 21 octets with "encrypt_then_mac".
+   length would require a minimum of 11 octets of padding (for [RFC5246]
+   where the MAC is covered by encryption); or 15 octets if the
+   "encrypt_then_mac" extension [RFC7366] is negotiated.  With this
+   limit, a record with 250 octets of plaintext could be padded to the
+   same length by including at most 17 octets of padding; or 21 octets
+   with "encrypt_then_mac".
 
-   An implementation that always adds the minimum amount of padding to
-   records protected with block ciphers will always comply with this
-   requirement.
+   An implementation that always adds the minimum amount of padding will
+   always comply with this requirement.
 
 5.  Deprecating "max_fragment_length"
 
