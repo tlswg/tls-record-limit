@@ -4,9 +4,9 @@
 
 TLS                                                           M. Thomson
 Internet-Draft                                                   Mozilla
-Updates: 6066 (if approved)                               March 21, 2017
+Updates: 6066 (if approved)                                April 5, 2017
 Intended status: Standards Track
-Expires: September 22, 2017
+Expires: October 7, 2017
 
 
      Record Size Limit Extension for Transport Layer Security (TLS)
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 22, 2017.
+   This Internet-Draft will expire on October 7, 2017.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson                Expires September 22, 2017               [Page 1]
+Thomson                  Expires October 7, 2017                [Page 1]
 
-Internet-Draft              TLS Record Limit                  March 2017
+Internet-Draft              TLS Record Limit                  April 2017
 
 
 Table of Contents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson                Expires September 22, 2017               [Page 2]
+Thomson                  Expires October 7, 2017                [Page 2]
 
-Internet-Draft              TLS Record Limit                  March 2017
+Internet-Draft              TLS Record Limit                  April 2017
 
 
 3.  Limitations of the "max_fragment_length" Extension
@@ -138,19 +138,19 @@ Internet-Draft              TLS Record Limit                  March 2017
    it impossible to add new values to the extension without risking
    connection attempts failing.
 
-   The "max_fragment_length" extension is also ill-suited to cases where
-   the capabilities of client and server are asymmetric.  The server is
-   required to select a fragment length that is as small or smaller than
-   the client offers and both endpoints need to comply with this smaller
-   limit.
+   A server that negotiates "max_fragment_length" is required to echo
+   the value selected by the client.  The server cannot request a lower
+   limit than the one the client offered.  This is a significant problem
+   if a server is more constrained than the clients it serves.
 
-   Constraints on record size are often receiver constraints.  In
-   particular, an Authentication Encryption with Additional Data (AEAD)
-   ciphers (see [RFC5116]) API requires that an entire record be present
-   to decrypt and authenticate it.  Some implementations choose not to
-   implement an AEAD interface in this way to avoid this problem, but
-   that exposes them to risks that an AEAD is intended to protect
-   against.
+   The "max_fragment_length" extension is also ill-suited to cases where
+   the capabilities of client and server are asymmetric.  Constraints on
+   record size are often receiver constraints.  In particular, an
+   Authentication Encryption with Additional Data (AEAD) ciphers (see
+   [RFC5116]) API requires that an entire record be present to decrypt
+   and authenticate it.  Some implementations choose not to implement an
+   AEAD interface in this way to avoid this problem, but that exposes
+   them to risks that an AEAD is intended to protect against.
 
    In comparison, an implementation might be able to send data
    incrementally.  Encryption does not have the same atomicity
@@ -165,9 +165,9 @@ Internet-Draft              TLS Record Limit                  March 2017
 
 
 
-Thomson                Expires September 22, 2017               [Page 3]
+Thomson                  Expires October 7, 2017                [Page 3]
 
-Internet-Draft              TLS Record Limit                  March 2017
+Internet-Draft              TLS Record Limit                  April 2017
 
 
 4.  The "record_size_limit" Extension
@@ -210,9 +210,9 @@ Internet-Draft              TLS Record Limit                  March 2017
    that up to 256 octets of padding and padding length can be added to
    block ciphers.
 
-   The record size limit only applies to protected records that are sent
-   toward a peer.  An endpoint MAY send records that are larger than the
-   limit it advertises.
+   The record size limit only applies to records sent toward the
+   endpoint that advertises the limit.  An endpoint MAY send records
+   that are larger than the limit it advertises as its own limit.
 
    Clients SHOULD advertise the "record_size_limit" extension, even if
    they have no need to limit the size of records.  This allows servers
@@ -221,9 +221,9 @@ Internet-Draft              TLS Record Limit                  March 2017
 
 
 
-Thomson                Expires September 22, 2017               [Page 4]
+Thomson                  Expires October 7, 2017                [Page 4]
 
-Internet-Draft              TLS Record Limit                  March 2017
+Internet-Draft              TLS Record Limit                  April 2017
 
 
    negotiated, endpoints can send records of any size permitted by the
@@ -277,9 +277,9 @@ Internet-Draft              TLS Record Limit                  March 2017
 
 
 
-Thomson                Expires September 22, 2017               [Page 5]
+Thomson                  Expires October 7, 2017                [Page 5]
 
-Internet-Draft              TLS Record Limit                  March 2017
+Internet-Draft              TLS Record Limit                  April 2017
 
 
    [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
@@ -333,4 +333,4 @@ Author's Address
 
 
 
-Thomson                Expires September 22, 2017               [Page 6]
+Thomson                  Expires October 7, 2017                [Page 6]
