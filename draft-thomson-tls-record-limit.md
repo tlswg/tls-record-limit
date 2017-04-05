@@ -88,17 +88,18 @@ handshake with an "illegal_parameter" alert if they receive the extension with a
 value they don't understand.  This makes it impossible to add new values to the
 extension without risking connection attempts failing.
 
-The `max_fragment_length` extension is also ill-suited to cases where the
-capabilities of client and server are asymmetric.  The server is required to
-select a fragment length that is as small or smaller than the client offers and
-both endpoints need to comply with this smaller limit.
+A server that negotiates `max_fragment_length` is required to echo the value
+selected by the client.  The server cannot request a lower limit than the one
+the client offered.  This is a significant problem if a server is more
+constrained than the clients it serves.
 
-Constraints on record size are often receiver constraints.  In particular, an
-Authentication Encryption with Additional Data (AEAD) ciphers (see {{?RFC5116}})
-API requires that an entire record be present to decrypt and authenticate it.
-Some implementations choose not to implement an AEAD interface in this way to
-avoid this problem, but that exposes them to risks that an AEAD is intended to
-protect against.
+The `max_fragment_length` extension is also ill-suited to cases where the
+capabilities of client and server are asymmetric.  Constraints on record size
+are often receiver constraints.  In particular, an Authentication Encryption
+with Additional Data (AEAD) ciphers (see {{?RFC5116}}) API requires that an
+entire record be present to decrypt and authenticate it.  Some implementations
+choose not to implement an AEAD interface in this way to avoid this problem, but
+that exposes them to risks that an AEAD is intended to protect against.
 
 In comparison, an implementation might be able to send data incrementally.
 Encryption does not have the same atomicity requirement.  Some ciphers can be
