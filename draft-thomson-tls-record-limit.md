@@ -147,9 +147,9 @@ maximum expansion possible due to record protection based on the cipher suites
 it offers or selects.  Note that up to 256 octets of padding and padding length
 can be added to block ciphers.
 
-The record size limit only applies to protected records that are sent toward a
-peer.  An endpoint MAY send records that are larger than the limit it
-advertises.
+The record size limit only applies to records sent toward the endpoint that
+advertises the limit.  An endpoint MAY send records that are larger than the
+limit it advertises as its own limit.
 
 Clients SHOULD advertise the `record_size_limit` extension, even if they have no
 need to limit the size of records.  This allows servers to apply a limit at
