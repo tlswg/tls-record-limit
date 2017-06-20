@@ -34,6 +34,8 @@ informative:
 An extension to Transport Layer Security (TLS) is defined that allows endpoints
 to negotiate the maximum size of protected records that each will send the other.
 
+This replaces the maximum fragment length extension defined in RFC 6066.
+
 --- middle
 
 # Introduction
@@ -55,9 +57,9 @@ The `max_fragment_length` extension {{?RFC6066}} was designed to enable
 constrained clients to negotiate a lower record size.  However,
 `max_fragment_length` suffers from several design problems (see {{mfl-bad}}).
 
-This document defines a `record_size_limit` extension that replaces
-`max_fragment_length` (see {{max-record}}).  This extension is valid in all
-versions of TLS.
+This document defines a `record_size_limit` extension ({{max-record}}).  This
+extension replaces `max_fragment_length` {{!RFC6066}}, which this document
+deprecates.  This extension is valid in all versions of TLS.
 
 
 # Conventions and Definitions
@@ -167,12 +169,12 @@ EncryptedExtensions message.
 
 # Deprecating "max_fragment_length"
 
-The `record_size_limit` extension replaces the `max_fragment_length` extension.
-A server that supports the `record_size_limit` extension MUST ignore and
-`max_fragment_length` that appears in a ClientHello if both extensions appear.
-A client MUST treat receipt of both `max_fragment_length` and
-`record_size_limit` as a fatal error, and SHOULD generate an "illegal_parameter"
-alert.
+The `record_size_limit` extension replaces the `max_fragment_length` extension
+{{!RFC6066}}.  A server that supports the `record_size_limit` extension MUST
+ignore and `max_fragment_length` that appears in a ClientHello if both
+extensions appear.  A client MUST treat receipt of both `max_fragment_length`
+and `record_size_limit` as a fatal error, and SHOULD generate an
+"illegal_parameter" alert.
 
 Clients that depend on having a small record size MAY continue to advertise the
 `max_fragment_length`.
