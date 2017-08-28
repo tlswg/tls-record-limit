@@ -130,7 +130,7 @@ handshake messages in particular - are not subject to this limit.
 This value is the size of the plaintext of a protected record.  The value
 includes the content type and padding added in TLS 1.3 (that is, the complete
 length of TLSInnerPlaintext).  Padding added as part of encryption, such as that
-added by a block cipher, is not included in this count.
+added by a block cipher, is not included in this count (see {{expansion}}).
 
 An endpoint that supports all record sizes can include any limit up to the
 protocol-defined limit for maximum record size.  For TLS 1.3 and earlier, that
@@ -142,13 +142,6 @@ by such a future version or extension.
 Even if a larger record size limit is provided by a peer, an endpoint MUST NOT
 send records larger than the protocol-defined limit, unless explicitly allowed
 by a future TLS version or extension.
-
-The size limit expressed in the `record_size_limit` extension doesn't account
-for expansion due to compression or record protection.  It is expected that a
-constrained device will disable compression and know - and account for - the
-maximum expansion possible due to record protection based on the cipher suites
-it offers or selects.  Note that up to 256 octets of padding and padding length
-can be added to block ciphers.
 
 The record size limit only applies to records sent toward the endpoint that
 advertises the limit.  An endpoint MAY send records that are larger than the
@@ -165,6 +158,33 @@ generate an "illegal_parameter" alert.
 
 In TLS 1.3, the server sends the `record_size_limit` extension in the
 EncryptedExtensions message.
+
+
+## Record Expansion Limits {#expansion}
+
+The size limit expressed in the `record_size_limit` extension doesn't account
+for expansion due to compression or record protection.  It is expected that a
+constrained device will disable compression to avoid unpredictable increases in
+record size.  Stream ciphers and existing AEAD ciphers don't permit variable
+amounts of expansion, but block ciphers do permit variable expansion.
+
+In TLS 1.2, block ciphers allow between 1 and 256 octets of padding.  When a
+limit lower than the protocol-defined limit is advertised, a second limit
+applies to the length of records that use block ciphers.  An endpoint MUST NOT
+add padding to records that would cause the protected record to exceed the size
+of a protected record that contains the maximum amount of plaintext and the
+minimum permitted amount of padding.
+
+For example, TLS_RSA_WITH_AES_128_CBC_SHA has 16 octet blocks and a 20 octet
+MAC.  Given a record size limit of 256, a record of that length would require a
+minimum of 11 octets of padding (for {{!RFC5246}} where the MAC is covered by
+encryption); or 15 octets if the `encrypt_then_mac` extension {{!RFC7366}} is
+negotiated.  With this limit, a record with 250 octets of plaintext could be
+padded to the same length by including at most 17 octets of padding; or 21
+octets with `encrypt_then_mac`.
+
+An implementation that always adds the minimum amount of padding will always
+comply with this requirement.
 
 
 # Deprecating "max_fragment_length"
@@ -195,3 +215,7 @@ recommended and marked as "Encrypted" in TLS 1.3.
 
 
 --- back
+
+# Acknowledgments
+
+Thomas Pornin provided significant input to this document.
