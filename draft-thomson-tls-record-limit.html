@@ -23,13 +23,12 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    right: calc(50vw - 500px);
+    right: calc(50vw - 525px);
     width: 300px;
-    padding: 0 1em;
     z-index: 1;
   }
   #rfc\.toc {
-    top: 16px;
+    top: 15px;
   }
   ul.toc {
     top: 80px;
@@ -37,8 +36,7 @@
   }
 
   body {
-    padding-left: 1.5em;
-    padding-right: 29em;
+    padding-right: 350px;
   }
 }
 
@@ -47,7 +45,7 @@ body {
   color: #333;
   font-size-adjust: 0.5;
   line-height: 130%;
-  margin: 2.5em auto;
+  margin: 25px auto;
   max-width: 724px;
 }
 
@@ -281,21 +279,23 @@ address {
 <link href="#rfc.section.2" rel="Chapter" title="2 Conventions and Definitions">
 <link href="#rfc.section.3" rel="Chapter" title="3 Limitations of the &#8220;max_fragment_length&#8221; Extension">
 <link href="#rfc.section.4" rel="Chapter" title="4 The &#8220;record_size_limit&#8221; Extension">
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Record Expansion Limits">
 <link href="#rfc.section.5" rel="Chapter" title="5 Deprecating &#8220;max_fragment_length&#8221;">
 <link href="#rfc.section.6" rel="Chapter" title="6 Security Considerations">
 <link href="#rfc.section.7" rel="Chapter" title="7 IANA Considerations">
 <link href="#rfc.references" rel="Chapter" title="8 References">
 <link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References">
 <link href="#rfc.references.2" rel="Chapter" title="8.2 Informative References">
+<link href="#rfc.appendix.A" rel="Chapter" title="A Acknowledgments">
 <link href="#rfc.authors" rel="Chapter">
 
 
-  <meta name="generator" content="xml2rfc version 2.6.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.7.0 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Thomson, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-thomson-tls-record-limit-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-6-20" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-8-28" />
   <meta name="dct.abstract" content="An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other." />
   <meta name="description" content="An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other." />
 
@@ -316,14 +316,14 @@ address {
 </tr>
 <tr>
 <td class="left">Updates: 6066 (if approved)</td>
-<td class="right">June 20, 2017</td>
+<td class="right">August 28, 2017</td>
 </tr>
 <tr>
 <td class="left">Intended status: Standards Track</td>
 <td class="right"></td>
 </tr>
 <tr>
-<td class="left">Expires: December 22, 2017</td>
+<td class="left">Expires: March 1, 2018</td>
 <td class="right"></td>
 </tr>
 
@@ -341,7 +341,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on December 22, 2017.</p>
+<p>This Internet-Draft will expire on March 1, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -359,7 +359,9 @@ address {
 </li>
 <li>4.   <a href="#rfc.section.4">The &#8220;record_size_limit&#8221; Extension</a>
 </li>
-<li>5.   <a href="#rfc.section.5">Deprecating &#8220;max_fragment_length&#8221;</a>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Record Expansion Limits</a>
+</li>
+</ul><li>5.   <a href="#rfc.section.5">Deprecating &#8220;max_fragment_length&#8221;</a>
 </li>
 <li>6.   <a href="#rfc.section.6">Security Considerations</a>
 </li>
@@ -371,7 +373,9 @@ address {
 </li>
 <li>8.2.   <a href="#rfc.references.2">Informative References</a>
 </li>
-</ul><li><a href="#rfc.authors">Author's Address</a>
+</ul><li>Appendix A.   <a href="#rfc.appendix.A">Acknowledgments</a>
+</li>
+<li><a href="#rfc.authors">Author's Address</a>
 </li>
 
 
@@ -407,14 +411,20 @@ address {
    uint16 RecordSizeLimit;
 </pre>
 <p id="rfc.section.4.p.2">The value of RecordSizeLimit is the maximum size of record that the endpoint is willing to receive.  When the <samp>record_size_limit</samp> extension is negotiated, an endpoint MUST NOT generate a protected record with plaintext that is larger than the RecordSizeLimit value it receives from its peer.  Unprotected messages - handshake messages in particular - are not subject to this limit.</p>
-<p id="rfc.section.4.p.3">This value is the size of the plaintext of a protected record.  The value includes the content type and padding added in TLS 1.3 (that is, the complete length of TLSInnerPlaintext).  Padding added as part of encryption, such as that added by a block cipher, is not included in this count.</p>
+<p id="rfc.section.4.p.3">This value is the size of the plaintext of a protected record.  The value includes the content type and padding added in TLS 1.3 (that is, the complete length of TLSInnerPlaintext).  Padding added as part of encryption, such as that added by a block cipher, is not included in this count (see <a href="#expansion" class="xref">Section 4.1</a>).</p>
 <p id="rfc.section.4.p.4">An endpoint that supports all record sizes can include any limit up to the protocol-defined limit for maximum record size.  For TLS 1.3 and earlier, that limit is 2^14 octets.  Higher values are currently reserved for future versions of the protocol that may allow larger records; an endpoint MUST NOT send a value higher than the protocol-defined maximum record size unless explicitly allowed by such a future version or extension.</p>
 <p id="rfc.section.4.p.5">Even if a larger record size limit is provided by a peer, an endpoint MUST NOT send records larger than the protocol-defined limit, unless explicitly allowed by a future TLS version or extension.</p>
-<p id="rfc.section.4.p.6">The size limit expressed in the <samp>record_size_limit</samp> extension doesn&#8217;t account for expansion due to compression or record protection.  It is expected that a constrained device will disable compression and know - and account for - the maximum expansion possible due to record protection based on the cipher suites it offers or selects.  Note that up to 256 octets of padding and padding length can be added to block ciphers.</p>
-<p id="rfc.section.4.p.7">The record size limit only applies to records sent toward the endpoint that advertises the limit.  An endpoint MAY send records that are larger than the limit it advertises as its own limit.</p>
-<p id="rfc.section.4.p.8">Clients SHOULD advertise the <samp>record_size_limit</samp> extension, even if they have no need to limit the size of records.  This allows servers to apply a limit at their discretion.  If this extension is not negotiated, endpoints can send records of any size permitted by the protocol or other negotiated extensions.</p>
-<p id="rfc.section.4.p.9">Endpoints MUST NOT send a <samp>record_size_limit</samp> extension with a value smaller than 64.  An endpoint MUST treat receipt of a smaller value as a fatal error and generate an &#8220;illegal_parameter&#8221; alert.</p>
-<p id="rfc.section.4.p.10">In TLS 1.3, the server sends the <samp>record_size_limit</samp> extension in the EncryptedExtensions message.</p>
+<p id="rfc.section.4.p.6">The record size limit only applies to records sent toward the endpoint that advertises the limit.  An endpoint MAY send records that are larger than the limit it advertises as its own limit.</p>
+<p id="rfc.section.4.p.7">Clients SHOULD advertise the <samp>record_size_limit</samp> extension, even if they have no need to limit the size of records.  This allows servers to apply a limit at their discretion.  If this extension is not negotiated, endpoints can send records of any size permitted by the protocol or other negotiated extensions.</p>
+<p id="rfc.section.4.p.8">Endpoints MUST NOT send a <samp>record_size_limit</samp> extension with a value smaller than 64.  An endpoint MUST treat receipt of a smaller value as a fatal error and generate an &#8220;illegal_parameter&#8221; alert.</p>
+<p id="rfc.section.4.p.9">In TLS 1.3, the server sends the <samp>record_size_limit</samp> extension in the EncryptedExtensions message.</p>
+<h2 id="rfc.section.4.1">
+<a href="#rfc.section.4.1">4.1.</a> <a href="#expansion" id="expansion">Record Expansion Limits</a>
+</h2>
+<p id="rfc.section.4.1.p.1">The size limit expressed in the <samp>record_size_limit</samp> extension doesn&#8217;t account for expansion due to compression or record protection.  It is expected that a constrained device will disable compression to avoid unpredictable increases in record size.  Stream ciphers and existing AEAD ciphers don&#8217;t permit variable amounts of expansion, but block ciphers do permit variable expansion.</p>
+<p id="rfc.section.4.1.p.2">In TLS 1.2, block ciphers allow between 1 and 256 octets of padding.  When a limit lower than the protocol-defined limit is advertised, a second limit applies to the length of records that use block ciphers.  An endpoint MUST NOT add padding to records that would cause the protected record to exceed the size of a protected record that contains the maximum amount of plaintext and the minimum permitted amount of padding.</p>
+<p id="rfc.section.4.1.p.3">For example, TLS_RSA_WITH_AES_128_CBC_SHA has 16 octet blocks and a 20 octet MAC.  Given a record size limit of 256, a record of that length would require a minimum of 11 octets of padding (for <a href="#RFC5246" class="xref">[RFC5246]</a> where the MAC is covered by encryption); or 15 octets if the <samp>encrypt_then_mac</samp> extension <a href="#RFC7366" class="xref">[RFC7366]</a> is negotiated.  With this limit, a record with 250 octets of plaintext could be padded to the same length by including at most 17 octets of padding; or 21 octets with <samp>encrypt_then_mac</samp>.</p>
+<p id="rfc.section.4.1.p.4">An implementation that always adds the minimum amount of padding will always comply with this requirement.</p>
 <h1 id="rfc.section.5">
 <a href="#rfc.section.5">5.</a> <a href="#deprecating-maxfragmentlength" id="deprecating-maxfragmentlength">Deprecating &#8220;max_fragment_length&#8221;</a>
 </h1>
@@ -436,7 +446,7 @@ address {
 <tr>
 <td class="reference"><b id="I-D.ietf-tls-tls13">[I-D.ietf-tls-tls13]</b></td>
 <td class="top">
-<a>Rescorla, E.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-tls-tls13-20">The Transport Layer Security (TLS) Protocol Version 1.3</a>", Internet-Draft draft-ietf-tls-tls13-20, April 2017.</td>
+<a>Rescorla, E.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-tls-tls13-21">The Transport Layer Security (TLS) Protocol Version 1.3</a>", Internet-Draft draft-ietf-tls-tls13-21, July 2017.</td>
 </tr>
 <tr>
 <td class="reference"><b id="RFC2119">[RFC2119]</b></td>
@@ -452,6 +462,11 @@ address {
 <td class="reference"><b id="RFC6066">[RFC6066]</b></td>
 <td class="top">
 <a>Eastlake 3rd, D.</a>, "<a href="http://tools.ietf.org/html/rfc6066">Transport Layer Security (TLS) Extensions: Extension Definitions</a>", RFC 6066, DOI 10.17487/RFC6066, January 2011.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7366">[RFC7366]</b></td>
+<td class="top">
+<a>Gutmann, P.</a>, "<a href="http://tools.ietf.org/html/rfc7366">Encrypt-then-MAC for Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)</a>", RFC 7366, DOI 10.17487/RFC7366, September 2014.</td>
 </tr>
 </tbody></table>
 <h2 id="rfc.references.2">
@@ -473,6 +488,10 @@ address {
 <a>Tarreau, W.</a>, "<a href="https://lists.w3.org/Archives/Public/ietf-http-wg/2014AprJun/1591.html">Re: Stuck in a train -- reading HTTP/2 draft.</a>", n.d..</td>
 </tr>
 </tbody></table>
+<h1 id="rfc.appendix.A">
+<a href="#rfc.appendix.A">Appendix A.</a> <a href="#acknowledgments" id="acknowledgments">Acknowledgments</a>
+</h1>
+<p id="rfc.section.A.p.1">Thomas Pornin provided significant input to this document.</p>
 <h1 id="rfc.authors"><a href="#rfc.authors">Author's Address</a></h1>
 <div class="avoidbreak">
   <address class="vcard">
@@ -497,6 +516,6 @@ address {
   </address>
 </div>
 
-  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/martinthomson/tls-record-limit">Fork me on GitHub</a></div></div>
+  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/tlswg/tls-record-limit">Fork me on GitHub</a></div></div>
 </body>
 </html>
