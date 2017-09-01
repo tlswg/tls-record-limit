@@ -22,13 +22,6 @@ author:
     email: martin.thomson@gmail.com
 
 
-informative:
-  TARREAU:
-    title: "Re: Stuck in a train -- reading HTTP/2 draft."
-    author:
-      - ins: W. Tarreau
-    target: "https://lists.w3.org/Archives/Public/ietf-http-wg/2014AprJun/1591.html"
-
 --- abstract
 
 An extension to Transport Layer Security (TLS) is defined that allows endpoints
@@ -79,10 +72,13 @@ cannot use `max_fragment_length` without risking a reduction in the size of
 records.  The maximum value that the extension permits is 2^12, much smaller
 than the maximum record size of 2^14 that the protocol permits.
 
-For large data transfers, small record sizes can materially affect performance
-{{TARREAU}}.  Consequently, clients that are capable of receiving large records
-could be unwilling to risk reducing performance by offering the extension,
-especially if the extension is rarely needed.
+For large data transfers, small record sizes can materially affect performance.
+Every record incurs additional costs, both in the additional octets for record
+headers and for expansion due to encryption.  Processing more records also adds
+computational overheads that can be amortized more effectively for larger record
+sizes.  Consequently, clients that are capable of receiving large records could
+be unwilling to risk reducing performance by offering the extension, especially
+if the extension is rarely needed.
 
 This would not be an issue if a codepoint were available or could be added for
 fragments of 2^14 octets.  However, RFC 6066 requires that servers abort the
