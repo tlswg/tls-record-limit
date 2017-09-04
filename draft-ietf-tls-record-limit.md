@@ -144,8 +144,9 @@ send records larger than the protocol-defined limit, unless explicitly allowed
 by a future TLS version or extension.
 
 The record size limit only applies to records sent toward the endpoint that
-advertises the limit.  An endpoint MAY send records that are larger than the
-limit it advertises as its own limit.
+advertises the limit.  An endpoint can send records that are larger than the
+limit it advertises as its own limit.  An endpoint that receives a record
+larger than its advertised limit MUST generate a fatal "record_overflow" alert.
 
 Clients SHOULD advertise the `record_size_limit` extension, even if they have no
 need to limit the size of records.  This allows servers to apply a limit at
