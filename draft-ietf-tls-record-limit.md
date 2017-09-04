@@ -53,6 +53,12 @@ only 16 octets).  TLS 1.3 reduces the allowance for expansion to 256 octets.
 Allocating up to 18K of memory for ciphertext is beyond the capacity of some
 implementations.
 
+An Authentication Encryption with Additional Data (AEAD) ciphers (see
+{{?RFC5116}}) API requires that an entire record be present to decrypt and
+authenticate it.  Similarly, other ciphers cannot produce authenticated data
+until the entire record is present.  Thus, incremental processing of records
+minimally exposes endpoints to the risk of forged data.
+
 The `max_fragment_length` extension {{?RFC6066}} was designed to enable
 constrained clients to negotiate a lower record size.  However,
 `max_fragment_length` suffers from several design problems (see {{mfl-bad}}).
@@ -97,11 +103,7 @@ constrained than the clients it serves.
 
 The `max_fragment_length` extension is also ill-suited to cases where the
 capabilities of client and server are asymmetric.  Constraints on record size
-are often receiver constraints.  In particular, an Authentication Encryption
-with Additional Data (AEAD) ciphers (see {{?RFC5116}}) API requires that an
-entire record be present to decrypt and authenticate it.  Some implementations
-choose not to implement an AEAD interface in this way to avoid this problem, but
-that exposes them to risks that an AEAD is intended to protect against.
+are often receiver constraints.
 
 In comparison, an implementation might be able to send data incrementally.
 Encryption does not have the same atomicity requirement.  Some ciphers can be
