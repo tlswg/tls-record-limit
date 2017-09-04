@@ -223,4 +223,4 @@ recommended and marked as "Encrypted" in TLS 1.3.
 
 # Acknowledgments
 
-Thomas Pornin provided significant input to this document.
+Thomas Pornin and Hannes Tschofenig provided significant input to this document.
