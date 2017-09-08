@@ -128,7 +128,9 @@ this limit.
 
 This value is the length of the plaintext of a protected record.  The value
 includes the content type and padding added in TLS 1.3 (that is, the complete
-length of TLSInnerPlaintext).  Padding added as part of encryption, such as that
+length of TLSInnerPlaintext).  In TLS 1.2 and earlier, the limit covers all
+input to compression and encryption, that is the data that ultimately produces
+TLSCiphertext.fragment.  Padding added as part of encryption, such as that
 added by a block cipher, is not included in this count (see {{expansion}}).
 
 An endpoint that supports all record sizes can include any limit up to the
