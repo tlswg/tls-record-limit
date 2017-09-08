@@ -164,6 +164,11 @@ generate an "illegal_parameter" alert.
 In TLS 1.3, the server sends the `record_size_limit` extension in the
 EncryptedExtensions message.
 
+During renegotiation, the record size limit is renegotiated.  Records are
+subject to the limits that were set in the handshake that produces the keys that
+are used to protect those records.  This admits the possibility that the
+extension might not be negotiated when a connection is renegotiated.
+
 
 ## Record Expansion Limits {#expansion}
 
