@@ -294,8 +294,8 @@ address {
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Thomson, M." />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-thomson-tls-record-limit-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-8-28" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-tls-record-limit-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-9-12" />
   <meta name="dct.abstract" content="An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other." />
   <meta name="description" content="An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other." />
 
@@ -316,14 +316,14 @@ address {
 </tr>
 <tr>
 <td class="left">Updates: 6066 (if approved)</td>
-<td class="right">August 28, 2017</td>
+<td class="right">September 12, 2017</td>
 </tr>
 <tr>
 <td class="left">Intended status: Standards Track</td>
 <td class="right"></td>
 </tr>
 <tr>
-<td class="left">Expires: March 1, 2018</td>
+<td class="left">Expires: March 16, 2018</td>
 <td class="right"></td>
 </tr>
 
@@ -332,7 +332,7 @@ address {
   </table>
 
   <p class="title">Record Size Limit Extension for Transport Layer Security (TLS)<br />
-  <span class="filename">draft-thomson-tls-record-limit-latest</span></p>
+  <span class="filename">draft-ietf-tls-record-limit-latest</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
 <p>An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other.</p>
@@ -341,7 +341,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on March 1, 2018.</p>
+<p>This Internet-Draft will expire on March 16, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -386,8 +386,9 @@ address {
 </h1>
 <p id="rfc.section.1.p.1">Implementing Transport Layer Security (TLS) <a href="#I-D.ietf-tls-tls13" class="xref">[I-D.ietf-tls-tls13]</a> for constrained devices can be challenging.  However, recent improvements to the design and implementation of cryptographic algorithms have made TLS accessible to some highly limited devices (see for example <a href="#RFC7925" class="xref">[RFC7925]</a>).</p>
 <p id="rfc.section.1.p.2">Receiving large protected records can be particularly difficult for a device with limited operating memory.  TLS versions 1.2 and earlier <a href="#RFC5246" class="xref">[RFC5246]</a> permit senders to generate records 16384 octets in size, plus any expansion from compression and protection up to 2048 octets (though typically this expansion is only 16 octets).  TLS 1.3 reduces the allowance for expansion to 256 octets.  Allocating up to 18K of memory for ciphertext is beyond the capacity of some implementations.</p>
-<p id="rfc.section.1.p.3">The <samp>max_fragment_length</samp> extension <a href="#RFC6066" class="xref">[RFC6066]</a> was designed to enable constrained clients to negotiate a lower record size.  However, <samp>max_fragment_length</samp> suffers from several design problems (see <a href="#mfl-bad" class="xref">Section 3</a>).</p>
-<p id="rfc.section.1.p.4">This document defines a <samp>record_size_limit</samp> extension (<a href="#max-record" class="xref">Section 4</a>).  This extension replaces <samp>max_fragment_length</samp> <a href="#RFC6066" class="xref">[RFC6066]</a>, which this document deprecates.  This extension is valid in all versions of TLS.</p>
+<p id="rfc.section.1.p.3">An Authentication Encryption with Additional Data (AEAD) ciphers (see <a href="#RFC5116" class="xref">[RFC5116]</a>) API requires that an entire record be present to decrypt and authenticate it.  Similarly, other ciphers cannot produce authenticated data until the entire record is present.  Thus, incremental processing of records minimally exposes endpoints to the risk of forged data.</p>
+<p id="rfc.section.1.p.4">The <samp>max_fragment_length</samp> extension <a href="#RFC6066" class="xref">[RFC6066]</a> was designed to enable constrained clients to negotiate a lower record size.  However, <samp>max_fragment_length</samp> suffers from several design problems (see <a href="#mfl-bad" class="xref">Section 3</a>).</p>
+<p id="rfc.section.1.p.5">This document defines a <samp>record_size_limit</samp> extension (<a href="#max-record" class="xref">Section 4</a>).  This extension replaces <samp>max_fragment_length</samp> <a href="#RFC6066" class="xref">[RFC6066]</a>, which this document deprecates.  This extension is valid in all versions of TLS.</p>
 <h1 id="rfc.section.2">
 <a href="#rfc.section.2">2.</a> <a href="#conventions-and-definitions" id="conventions-and-definitions">Conventions and Definitions</a>
 </h1>
@@ -397,10 +398,10 @@ address {
 </h1>
 <p id="rfc.section.3.p.1">The <samp>max_fragment_length</samp> extension has several limitations that make it unsuitable for use.</p>
 <p id="rfc.section.3.p.2">A client that has no constraints preventing it from accepting a large record cannot use <samp>max_fragment_length</samp> without risking a reduction in the size of records.  The maximum value that the extension permits is 2^12, much smaller than the maximum record size of 2^14 that the protocol permits.</p>
-<p id="rfc.section.3.p.3">For large data transfers, small record sizes can materially affect performance <a href="#TARREAU" class="xref">[TARREAU]</a>.  Consequently, clients that are capable of receiving large records could be unwilling to risk reducing performance by offering the extension, especially if the extension is rarely needed.</p>
+<p id="rfc.section.3.p.3">For large data transfers, small record sizes can materially affect performance.  Every record incurs additional costs, both in the additional octets for record headers and for expansion due to encryption.  Processing more records also adds computational overheads that can be amortized more effectively for larger record sizes.  Consequently, clients that are capable of receiving large records could be unwilling to risk reducing performance by offering the extension, especially if the extension is rarely needed.</p>
 <p id="rfc.section.3.p.4">This would not be an issue if a codepoint were available or could be added for fragments of 2^14 octets.  However, RFC 6066 requires that servers abort the handshake with an &#8220;illegal_parameter&#8221; alert if they receive the extension with a value they don&#8217;t understand.  This makes it impossible to add new values to the extension without risking connection attempts failing.</p>
 <p id="rfc.section.3.p.5">A server that negotiates <samp>max_fragment_length</samp> is required to echo the value selected by the client.  The server cannot request a lower limit than the one the client offered.  This is a significant problem if a server is more constrained than the clients it serves.</p>
-<p id="rfc.section.3.p.6">The <samp>max_fragment_length</samp> extension is also ill-suited to cases where the capabilities of client and server are asymmetric.  Constraints on record size are often receiver constraints.  In particular, an Authentication Encryption with Additional Data (AEAD) ciphers (see <a href="#RFC5116" class="xref">[RFC5116]</a>) API requires that an entire record be present to decrypt and authenticate it.  Some implementations choose not to implement an AEAD interface in this way to avoid this problem, but that exposes them to risks that an AEAD is intended to protect against.</p>
+<p id="rfc.section.3.p.6">The <samp>max_fragment_length</samp> extension is also ill-suited to cases where the capabilities of client and server are asymmetric.  Constraints on record size are often receiver constraints.</p>
 <p id="rfc.section.3.p.7">In comparison, an implementation might be able to send data incrementally.  Encryption does not have the same atomicity requirement.  Some ciphers can be encrypted and sent progressively.  Thus, an endpoint might be willing to send more than its receive limit.</p>
 <p id="rfc.section.3.p.8">If these disincentives are sufficient to discourage clients from deploying the <samp>max_fragment_length</samp> extension, then constrained servers are unable to limit record sizes.</p>
 <h1 id="rfc.section.4">
@@ -410,14 +411,15 @@ address {
 <pre>
    uint16 RecordSizeLimit;
 </pre>
-<p id="rfc.section.4.p.2">The value of RecordSizeLimit is the maximum size of record that the endpoint is willing to receive.  When the <samp>record_size_limit</samp> extension is negotiated, an endpoint MUST NOT generate a protected record with plaintext that is larger than the RecordSizeLimit value it receives from its peer.  Unprotected messages - handshake messages in particular - are not subject to this limit.</p>
-<p id="rfc.section.4.p.3">This value is the size of the plaintext of a protected record.  The value includes the content type and padding added in TLS 1.3 (that is, the complete length of TLSInnerPlaintext).  Padding added as part of encryption, such as that added by a block cipher, is not included in this count (see <a href="#expansion" class="xref">Section 4.1</a>).</p>
-<p id="rfc.section.4.p.4">An endpoint that supports all record sizes can include any limit up to the protocol-defined limit for maximum record size.  For TLS 1.3 and earlier, that limit is 2^14 octets.  Higher values are currently reserved for future versions of the protocol that may allow larger records; an endpoint MUST NOT send a value higher than the protocol-defined maximum record size unless explicitly allowed by such a future version or extension.</p>
-<p id="rfc.section.4.p.5">Even if a larger record size limit is provided by a peer, an endpoint MUST NOT send records larger than the protocol-defined limit, unless explicitly allowed by a future TLS version or extension.</p>
-<p id="rfc.section.4.p.6">The record size limit only applies to records sent toward the endpoint that advertises the limit.  An endpoint MAY send records that are larger than the limit it advertises as its own limit.</p>
-<p id="rfc.section.4.p.7">Clients SHOULD advertise the <samp>record_size_limit</samp> extension, even if they have no need to limit the size of records.  This allows servers to apply a limit at their discretion.  If this extension is not negotiated, endpoints can send records of any size permitted by the protocol or other negotiated extensions.</p>
-<p id="rfc.section.4.p.8">Endpoints MUST NOT send a <samp>record_size_limit</samp> extension with a value smaller than 64.  An endpoint MUST treat receipt of a smaller value as a fatal error and generate an &#8220;illegal_parameter&#8221; alert.</p>
-<p id="rfc.section.4.p.9">In TLS 1.3, the server sends the <samp>record_size_limit</samp> extension in the EncryptedExtensions message.</p>
+<p id="rfc.section.4.p.2">The value of RecordSizeLimit is the maximum size of record in octets that the endpoint is willing to receive.  This value is used to limit the size of records that are created when encoding application data and handshake message into records.</p>
+<p id="rfc.section.4.p.3">When the <samp>record_size_limit</samp> extension is negotiated, an endpoint MUST NOT generate a protected record with plaintext that is larger than the RecordSizeLimit value it receives from its peer.  Unprotected messages - handshake messages in particular - are not subject to this limit.</p>
+<p id="rfc.section.4.p.4">This value is the length of the plaintext of a protected record.  The value includes the content type and padding added in TLS 1.3 (that is, the complete length of TLSInnerPlaintext).  In TLS 1.2 and earlier, the limit covers all input to compression and encryption, that is the data that ultimately produces TLSCiphertext.fragment.  Padding added as part of encryption, such as that added by a block cipher, is not included in this count (see <a href="#expansion" class="xref">Section 4.1</a>).</p>
+<p id="rfc.section.4.p.5">An endpoint that supports all record sizes can include any limit up to the protocol-defined limit for maximum record size.  For TLS 1.3 and earlier, that limit is 2^14 octets.  Higher values are currently reserved for future versions of the protocol that may allow larger records; an endpoint MUST NOT send a value higher than the protocol-defined maximum record size unless explicitly allowed by such a future version or extension.</p>
+<p id="rfc.section.4.p.6">Even if a larger record size limit is provided by a peer, an endpoint MUST NOT send records larger than the protocol-defined limit, unless explicitly allowed by a future TLS version or extension.</p>
+<p id="rfc.section.4.p.7">The record size limit only applies to records sent toward the endpoint that advertises the limit.  An endpoint can send records that are larger than the limit it advertises as its own limit.  An endpoint that receives a record larger than its advertised limit MUST generate a fatal &#8220;record_overflow&#8221; alert.</p>
+<p id="rfc.section.4.p.8">Clients SHOULD advertise the <samp>record_size_limit</samp> extension, even if they have no need to limit the size of records.  This allows servers to apply a limit at their discretion.  If this extension is not negotiated, endpoints can send records of any size permitted by the protocol or other negotiated extensions.</p>
+<p id="rfc.section.4.p.9">Endpoints MUST NOT send a <samp>record_size_limit</samp> extension with a value smaller than 64.  An endpoint MUST treat receipt of a smaller value as a fatal error and generate an &#8220;illegal_parameter&#8221; alert.</p>
+<p id="rfc.section.4.p.10">In TLS 1.3, the server sends the <samp>record_size_limit</samp> extension in the EncryptedExtensions message.</p>
 <h2 id="rfc.section.4.1">
 <a href="#rfc.section.4.1">4.1.</a> <a href="#expansion" id="expansion">Record Expansion Limits</a>
 </h2>
@@ -481,11 +483,6 @@ address {
 <td class="reference"><b id="RFC7925">[RFC7925]</b></td>
 <td class="top">
 <a>Tschofenig, H.</a> and <a>T. Fossati</a>, "<a href="http://tools.ietf.org/html/rfc7925">Transport Layer Security (TLS) / Datagram Transport Layer Security (DTLS) Profiles for the Internet of Things</a>", RFC 7925, DOI 10.17487/RFC7925, July 2016.</td>
-</tr>
-<tr>
-<td class="reference"><b id="TARREAU">[TARREAU]</b></td>
-<td class="top">
-<a>Tarreau, W.</a>, "<a href="https://lists.w3.org/Archives/Public/ietf-http-wg/2014AprJun/1591.html">Re: Stuck in a train -- reading HTTP/2 draft.</a>", n.d..</td>
 </tr>
 </tbody></table>
 <h1 id="rfc.appendix.A">
