@@ -4,9 +4,9 @@
 
 TLS                                                           M. Thomson
 Internet-Draft                                                   Mozilla
-Updates: 6066 (if approved)                           September 12, 2017
+Updates: 6066 (if approved)                           September 21, 2017
 Intended status: Standards Track
-Expires: March 16, 2018
+Expires: March 25, 2018
 
 
      Record Size Limit Extension for Transport Layer Security (TLS)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 16, 2018.
+   This Internet-Draft will expire on March 25, 2018.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thomson                  Expires March 16, 2018                 [Page 1]
+Thomson                  Expires March 25, 2018                 [Page 1]
 
 Internet-Draft              TLS Record Limit              September 2017
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Thomson                  Expires March 16, 2018                 [Page 2]
+Thomson                  Expires March 25, 2018                 [Page 2]
 
 Internet-Draft              TLS Record Limit              September 2017
 
@@ -165,7 +165,7 @@ Internet-Draft              TLS Record Limit              September 2017
 
 
 
-Thomson                  Expires March 16, 2018                 [Page 3]
+Thomson                  Expires March 25, 2018                 [Page 3]
 
 Internet-Draft              TLS Record Limit              September 2017
 
@@ -221,7 +221,7 @@ Internet-Draft              TLS Record Limit              September 2017
 
 
 
-Thomson                  Expires March 16, 2018                 [Page 4]
+Thomson                  Expires March 25, 2018                 [Page 4]
 
 Internet-Draft              TLS Record Limit              September 2017
 
@@ -242,6 +242,12 @@ Internet-Draft              TLS Record Limit              September 2017
 
    In TLS 1.3, the server sends the "record_size_limit" extension in the
    EncryptedExtensions message.
+
+   During renegotiation or resumption, the record size limit is
+   renegotiated.  Records are subject to the limits that were set in the
+   handshake that produces the keys that are used to protect those
+   records.  This admits the possibility that the extension might not be
+   negotiated when a connection is renegotiated or resumed.
 
 4.1.  Record Expansion Limits
 
@@ -269,18 +275,15 @@ Internet-Draft              TLS Record Limit              September 2017
    same length by including at most 17 octets of padding; or 21 octets
    with "encrypt_then_mac".
 
-   An implementation that always adds the minimum amount of padding will
-   always comply with this requirement.
 
 
-
-
-
-
-Thomson                  Expires March 16, 2018                 [Page 5]
+Thomson                  Expires March 25, 2018                 [Page 5]
 
 Internet-Draft              TLS Record Limit              September 2017
 
+
+   An implementation that always adds the minimum amount of padding will
+   always comply with this requirement.
 
 5.  Deprecating "max_fragment_length"
 
@@ -326,17 +329,19 @@ Internet-Draft              TLS Record Limit              September 2017
               DOI 10.17487/RFC5246, August 2008, <https://www.rfc-
               editor.org/info/rfc5246>.
 
+
+
+
+
+Thomson                  Expires March 25, 2018                 [Page 6]
+
+Internet-Draft              TLS Record Limit              September 2017
+
+
    [RFC6066]  Eastlake 3rd, D., "Transport Layer Security (TLS)
               Extensions: Extension Definitions", RFC 6066,
               DOI 10.17487/RFC6066, January 2011, <https://www.rfc-
               editor.org/info/rfc6066>.
-
-
-
-Thomson                  Expires March 16, 2018                 [Page 6]
-
-Internet-Draft              TLS Record Limit              September 2017
-
 
    [RFC7366]  Gutmann, P., "Encrypt-then-MAC for Transport Layer
               Security (TLS) and Datagram Transport Layer Security
@@ -357,7 +362,8 @@ Internet-Draft              TLS Record Limit              September 2017
 
 Appendix A.  Acknowledgments
 
-   Thomas Pornin provided significant input to this document.
+   Thomas Pornin and Hannes Tschofenig provided significant input to
+   this document.
 
 Author's Address
 
@@ -383,10 +389,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-Thomson                  Expires March 16, 2018                 [Page 7]
+Thomson                  Expires March 25, 2018                 [Page 7]
