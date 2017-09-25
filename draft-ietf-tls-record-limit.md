@@ -121,8 +121,8 @@ The ExtensionData of the `record_size_limit` extension is RecordSizeLimit:
 
 The value of RecordSizeLimit is the maximum size of record in octets that the
 endpoint is willing to receive.  This value is used to limit the size of records
-that are created when encoding application data and handshake message into
-records.
+that are created when encoding application data and protected handshake message
+into records.
 
 When the `record_size_limit` extension is negotiated, an endpoint MUST NOT
 generate a protected record with plaintext that is larger than the
