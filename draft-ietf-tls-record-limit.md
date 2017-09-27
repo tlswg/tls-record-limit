@@ -56,6 +56,11 @@ The `max_fragment_length` extension {{?RFC6066}} was designed to enable
 constrained clients to negotiate a lower record size.  However,
 `max_fragment_length` suffers from several design problems (see {{mfl-bad}}).
 
+A smaller protected record size is just one of many problems that a constrained
+implementation might need to address.  The `max_fragment_length` extension only
+addresses the memory allocation problem, it does not address limits of code
+size, or processing and bandwidth capacity.
+
 This document defines a `record_size_limit` extension ({{max-record}}).  This
 extension replaces `max_fragment_length` {{!RFC6066}}, which this document
 deprecates.  This extension is valid in all versions of TLS.
@@ -122,7 +127,8 @@ The ExtensionData of the `record_size_limit` extension is RecordSizeLimit:
 The value of RecordSizeLimit is the maximum size of record in octets that the
 endpoint is willing to receive.  This value is used to limit the size of records
 that are created when encoding application data and protected handshake message
-into records.
+into records.  The limit can interact with the maximum transfer unit (MTU) in
+DTLS, but it is a separate and independent constraint on record sizes.
 
 When the `record_size_limit` extension is negotiated, an endpoint MUST NOT
 generate a protected record with plaintext that is larger than the
