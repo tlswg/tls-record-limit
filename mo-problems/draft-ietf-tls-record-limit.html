@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Record Size Limit Extension for Transport Layer Security (TLS)</title>
+
+  
+<style type="text/css">/*<![CDATA[*/
+@viewport {
+  zoom: 1.0;
+  width: extend-to-zoom;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+
+@media screen and (min-width: 1024px) {
+  ul.toc, #rfc\.toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 525px);
+    width: 300px;
+    z-index: 1;
+  }
+  #rfc\.toc {
+    top: 15px;
+  }
+  ul.toc {
+    top: 80px;
+    overflow: auto;
+  }
+
+  body {
+    padding-right: 350px;
+  }
+}
+
+body {
+  font: 15px "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #333;
+  font-size-adjust: 0.5;
+  line-height: 130%;
+  margin: 25px auto;
+  max-width: 724px;
+}
+
+.title, .filename, h1, h2, h3, h4 {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size-adjust: 0.5;
+  font-weight: 500;
+  color: #333;
+  line-height: 100%;
+  margin: 0.8em 0 0.3em;
+}
+.title { font-size: 36px; }
+h1 { font-size: 30px; }
+h2 { font-size: 24px; }
+h3, h4 { font-size: 18px; }
+h1 a[href], h2 a[href], h3 a[href], h4 a[href] {
+  color: #333;
+}
+
+ul.toc li {
+  list-style: none;
+  text-indent: -2.5em;
+  padding-left: 2.5em;
+  padding-bottom: 5px;
+  margin: 0;
+}
+ul.toc ul {
+  margin: 0;
+}
+/* xml2rfc nests ul directly inside ul which messes with the style badly */
+ul.toc, ul.toc>ul, ul.toc ul>ul {
+  margin: 0 0 0 1.5em;
+}
+
+table {
+  margin-left: 0em;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+td {
+  border-top: 1px solid #ddd;
+  vertical-align: top;
+}
+tr:nth-child(2n+1) > td,
+tr:nth-child(2n+1) > th {
+  background-color: #f9f9f9;
+}
+td.reference {
+  max-width: 200px;
+  border-top: none;
+  padding-right: 1em;
+}
+.right {
+  text-align: right;
+}
+
+
+table.header {
+  width: 100%;
+}
+table.header td {
+  border: none;
+  background-color: transparent;
+  color: black;
+}
+.filename {
+  color: rgb(119, 119, 119);
+  font-size: 23px;
+  font-weight: normal;
+  height: auto;
+  line-height: 100%;
+}
+#rfc\.abstract+p {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 130%;
+}
+
+samp, tt, code, pre {
+  font: 11pt consolas, monospace;
+  font-size-adjust: none;
+}
+pre {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+  padding: 5px;
+  margin: 5px;
+}
+.figure {
+  font-style: italic;
+  margin: 0 1.5em;
+}
+
+address {
+  margin: 10px 0 0;
+}
+.vcard {
+  font-style: normal;
+}
+.vcardline {
+  display: block;
+}
+.vcardline .fn {
+  font-weight: bold;
+}
+.vcardline .hidden {
+  display: none;
+}
+
+dl {
+  margin-left: 1em;
+}
+dl.dl-horizontal: {
+  margin-left: 0;
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.nohang > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .5em;
+}
+dl.compact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+ul.empty {
+  list-style-type: none;
+}
+ul.empty li {
+  margin-top: .5em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #2a6496;
+}
+a[href]:hover {
+  background-color: #eee;
+}
+
+ol, ul, li, p {
+  padding: 0;
+  margin: 0.5em 0 0.5em 2em;
+}
+li, p {
+  margin-left: 0;
+}
+address {
+  font-style: normal;
+}
+
+.github-fork-ribbon-wrapper {
+  display: none;
+}
+@media screen and (min-width: 800px) {
+  /* "Fork me on GitHub" CSS ribbon based on
+   * https://github.com/simonwhitaker/github-fork-ribbon-css
+   */
+  .github-fork-ribbon {
+    position: absolute;
+    padding: 2px 0;
+    background-color: #a00;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
+    font: 700 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    pointer-events: auto;
+
+    top: 38px;
+    right: -45px;
+
+    transform: rotate(45deg);
+  }
+
+  .github-fork-ribbon a[href],
+  .github-fork-ribbon a[href]:hover {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+    width: 190px;
+    line-height: 18px;
+
+    display: inline-block;
+    padding: 2px 0;
+
+    border: 1.5px dotted #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .github-fork-ribbon-wrapper {
+    display: block;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    overflow: hidden;
+    top: 0; right: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .github-fork-ribbon-wrapper {
+    position: fixed;
+  }
+  /*]]>*/</style>
+
+
+  <link href="#rfc.toc" rel="Contents">
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction">
+<link href="#rfc.section.2" rel="Chapter" title="2 Conventions and Definitions">
+<link href="#rfc.section.3" rel="Chapter" title="3 Limitations of the &#8220;max_fragment_length&#8221; Extension">
+<link href="#rfc.section.4" rel="Chapter" title="4 The &#8220;record_size_limit&#8221; Extension">
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Record Expansion Limits">
+<link href="#rfc.section.5" rel="Chapter" title="5 Deprecating &#8220;max_fragment_length&#8221;">
+<link href="#rfc.section.6" rel="Chapter" title="6 Security Considerations">
+<link href="#rfc.section.7" rel="Chapter" title="7 IANA Considerations">
+<link href="#rfc.references" rel="Chapter" title="8 References">
+<link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References">
+<link href="#rfc.references.2" rel="Chapter" title="8.2 Informative References">
+<link href="#rfc.appendix.A" rel="Chapter" title="A Acknowledgments">
+<link href="#rfc.authors" rel="Chapter">
+
+
+  <meta name="generator" content="xml2rfc version 2.7.0 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Thomson, M." />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-tls-record-limit-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-9-27" />
+  <meta name="dct.abstract" content="An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other." />
+  <meta name="description" content="An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+<td class="left">TLS</td>
+<td class="right">M. Thomson</td>
+</tr>
+<tr>
+<td class="left">Internet-Draft</td>
+<td class="right">Mozilla</td>
+</tr>
+<tr>
+<td class="left">Updates: 6066 (if approved)</td>
+<td class="right">September 27, 2017</td>
+</tr>
+<tr>
+<td class="left">Intended status: Standards Track</td>
+<td class="right"></td>
+</tr>
+<tr>
+<td class="left">Expires: March 31, 2018</td>
+<td class="right"></td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Record Size Limit Extension for Transport Layer Security (TLS)<br />
+  <span class="filename">draft-ietf-tls-record-limit-latest</span></p>
+  
+  <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
+<p>An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other.</p>
+<p>This replaces the maximum fragment length extension defined in RFC 6066.</p>
+<h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on March 31, 2018.</p>
+<h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
+<p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a>
+</li>
+<li>2.   <a href="#rfc.section.2">Conventions and Definitions</a>
+</li>
+<li>3.   <a href="#rfc.section.3">Limitations of the &#8220;max_fragment_length&#8221; Extension</a>
+</li>
+<li>4.   <a href="#rfc.section.4">The &#8220;record_size_limit&#8221; Extension</a>
+</li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Record Expansion Limits</a>
+</li>
+</ul><li>5.   <a href="#rfc.section.5">Deprecating &#8220;max_fragment_length&#8221;</a>
+</li>
+<li>6.   <a href="#rfc.section.6">Security Considerations</a>
+</li>
+<li>7.   <a href="#rfc.section.7">IANA Considerations</a>
+</li>
+<li>8.   <a href="#rfc.references">References</a>
+</li>
+<ul><li>8.1.   <a href="#rfc.references.1">Normative References</a>
+</li>
+<li>8.2.   <a href="#rfc.references.2">Informative References</a>
+</li>
+</ul><li>Appendix A.   <a href="#rfc.appendix.A">Acknowledgments</a>
+</li>
+<li><a href="#rfc.authors">Author's Address</a>
+</li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1">
+<a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a>
+</h1>
+<p id="rfc.section.1.p.1">Implementing Transport Layer Security (TLS) <a href="#I-D.ietf-tls-tls13" class="xref">[I-D.ietf-tls-tls13]</a> for constrained devices can be challenging.  However, recent improvements to the design and implementation of cryptographic algorithms have made TLS accessible to some highly limited devices (see for example <a href="#RFC7925" class="xref">[RFC7925]</a>).</p>
+<p id="rfc.section.1.p.2">Receiving large protected records can be particularly difficult for a device with limited operating memory.  TLS versions 1.2 and earlier <a href="#RFC5246" class="xref">[RFC5246]</a> permit senders to generate records 16384 octets in size, plus any expansion from compression and protection up to 2048 octets (though typically this expansion is only 16 octets).  TLS 1.3 reduces the allowance for expansion to 256 octets.  Allocating up to 18K of memory for ciphertext is beyond the capacity of some implementations.</p>
+<p id="rfc.section.1.p.3">An Authentication Encryption with Additional Data (AEAD) ciphers (see <a href="#RFC5116" class="xref">[RFC5116]</a>) API requires that an entire record be present to decrypt and authenticate it.  Similarly, other ciphers cannot produce authenticated data until the entire record is present.  Thus, incremental processing of records minimally exposes endpoints to the risk of forged data.</p>
+<p id="rfc.section.1.p.4">The <samp>max_fragment_length</samp> extension <a href="#RFC6066" class="xref">[RFC6066]</a> was designed to enable constrained clients to negotiate a lower record size.  However, <samp>max_fragment_length</samp> suffers from several design problems (see <a href="#mfl-bad" class="xref">Section 3</a>).</p>
+<p id="rfc.section.1.p.5">A smaller protected record size is just one of many problems that a constrained implementation might need to address.  The <samp>max_fragment_length</samp> extension only addresses the memory allocation problem, it does not address limits of code size, or processing and bandwidth capacity.</p>
+<p id="rfc.section.1.p.6">This document defines a <samp>record_size_limit</samp> extension (<a href="#max-record" class="xref">Section 4</a>).  This extension replaces <samp>max_fragment_length</samp> <a href="#RFC6066" class="xref">[RFC6066]</a>, which this document deprecates.  This extension is valid in all versions of TLS.</p>
+<h1 id="rfc.section.2">
+<a href="#rfc.section.2">2.</a> <a href="#conventions-and-definitions" id="conventions-and-definitions">Conventions and Definitions</a>
+</h1>
+<p id="rfc.section.2.p.1">The words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;SHOULD&#8221;, and &#8220;MAY&#8221; are used in this document.  It&#8217;s not shouting; when they are capitalized, they have the special meaning defined in <a href="#RFC2119" class="xref">[RFC2119]</a>.</p>
+<h1 id="rfc.section.3">
+<a href="#rfc.section.3">3.</a> <a href="#mfl-bad" id="mfl-bad">Limitations of the &#8220;max_fragment_length&#8221; Extension</a>
+</h1>
+<p id="rfc.section.3.p.1">The <samp>max_fragment_length</samp> extension has several limitations that make it unsuitable for use.</p>
+<p id="rfc.section.3.p.2">A client that has no constraints preventing it from accepting a large record cannot use <samp>max_fragment_length</samp> without risking a reduction in the size of records.  The maximum value that the extension permits is 2^12, much smaller than the maximum record size of 2^14 that the protocol permits.</p>
+<p id="rfc.section.3.p.3">For large data transfers, small record sizes can materially affect performance.  Every record incurs additional costs, both in the additional octets for record headers and for expansion due to encryption.  Processing more records also adds computational overheads that can be amortized more effectively for larger record sizes.  Consequently, clients that are capable of receiving large records could be unwilling to risk reducing performance by offering the extension, especially if the extension is rarely needed.</p>
+<p id="rfc.section.3.p.4">This would not be an issue if a codepoint were available or could be added for fragments of 2^14 octets.  However, RFC 6066 requires that servers abort the handshake with an &#8220;illegal_parameter&#8221; alert if they receive the extension with a value they don&#8217;t understand.  This makes it impossible to add new values to the extension without risking connection attempts failing.</p>
+<p id="rfc.section.3.p.5">A server that negotiates <samp>max_fragment_length</samp> is required to echo the value selected by the client.  The server cannot request a lower limit than the one the client offered.  This is a significant problem if a server is more constrained than the clients it serves.</p>
+<p id="rfc.section.3.p.6">The <samp>max_fragment_length</samp> extension is also ill-suited to cases where the capabilities of client and server are asymmetric.  Constraints on record size are often receiver constraints.</p>
+<p id="rfc.section.3.p.7">In comparison, an implementation might be able to send data incrementally.  Encryption does not have the same atomicity requirement.  Some ciphers can be encrypted and sent progressively.  Thus, an endpoint might be willing to send more than its receive limit.</p>
+<p id="rfc.section.3.p.8">If these disincentives are sufficient to discourage clients from deploying the <samp>max_fragment_length</samp> extension, then constrained servers are unable to limit record sizes.</p>
+<h1 id="rfc.section.4">
+<a href="#rfc.section.4">4.</a> <a href="#max-record" id="max-record">The &#8220;record_size_limit&#8221; Extension</a>
+</h1>
+<p id="rfc.section.4.p.1">The ExtensionData of the <samp>record_size_limit</samp> extension is RecordSizeLimit:</p>
+<pre>
+   uint16 RecordSizeLimit;
+</pre>
+<p id="rfc.section.4.p.2">The value of RecordSizeLimit is the maximum size of record in octets that the endpoint is willing to receive.  This value is used to limit the size of records that are created when encoding application data and protected handshake message into records.  The limit can interact with the maximum transfer unit (MTU) in DTLS, but it is a separate and independent constraint on record sizes.</p>
+<p id="rfc.section.4.p.3">When the <samp>record_size_limit</samp> extension is negotiated, an endpoint MUST NOT generate a protected record with plaintext that is larger than the RecordSizeLimit value it receives from its peer.  Unprotected messages - handshake messages in particular - are not subject to this limit.</p>
+<p id="rfc.section.4.p.4">This value is the length of the plaintext of a protected record.  The value includes the content type and padding added in TLS 1.3 (that is, the complete length of TLSInnerPlaintext).  In TLS 1.2 and earlier, the limit covers all input to compression and encryption, that is the data that ultimately produces TLSCiphertext.fragment.  Padding added as part of encryption, such as that added by a block cipher, is not included in this count (see <a href="#expansion" class="xref">Section 4.1</a>).</p>
+<p id="rfc.section.4.p.5">An endpoint that supports all record sizes can include any limit up to the protocol-defined limit for maximum record size.  For TLS 1.3 and earlier, that limit is 2^14 octets.  Higher values are currently reserved for future versions of the protocol that may allow larger records; an endpoint MUST NOT send a value higher than the protocol-defined maximum record size unless explicitly allowed by such a future version or extension.</p>
+<p id="rfc.section.4.p.6">Even if a larger record size limit is provided by a peer, an endpoint MUST NOT send records larger than the protocol-defined limit, unless explicitly allowed by a future TLS version or extension.</p>
+<p id="rfc.section.4.p.7">The record size limit only applies to records sent toward the endpoint that advertises the limit.  An endpoint can send records that are larger than the limit it advertises as its own limit.  An endpoint that receives a record larger than its advertised limit MUST generate a fatal &#8220;record_overflow&#8221; alert.</p>
+<p id="rfc.section.4.p.8">Clients SHOULD advertise the <samp>record_size_limit</samp> extension, even if they have no need to limit the size of records.  This allows servers to apply a limit at their discretion.  If this extension is not negotiated, endpoints can send records of any size permitted by the protocol or other negotiated extensions.</p>
+<p id="rfc.section.4.p.9">Endpoints MUST NOT send a <samp>record_size_limit</samp> extension with a value smaller than 64.  An endpoint MUST treat receipt of a smaller value as a fatal error and generate an &#8220;illegal_parameter&#8221; alert.</p>
+<p id="rfc.section.4.p.10">In TLS 1.3, the server sends the <samp>record_size_limit</samp> extension in the EncryptedExtensions message.</p>
+<p id="rfc.section.4.p.11">During renegotiation or resumption, the record size limit is renegotiated.  Records are subject to the limits that were set in the handshake that produces the keys that are used to protect those records.  This admits the possibility that the extension might not be negotiated when a connection is renegotiated or resumed.</p>
+<h2 id="rfc.section.4.1">
+<a href="#rfc.section.4.1">4.1.</a> <a href="#expansion" id="expansion">Record Expansion Limits</a>
+</h2>
+<p id="rfc.section.4.1.p.1">The size limit expressed in the <samp>record_size_limit</samp> extension doesn&#8217;t account for expansion due to compression or record protection.  It is expected that a constrained device will disable compression to avoid unpredictable increases in record size.  Stream ciphers and existing AEAD ciphers don&#8217;t permit variable amounts of expansion, but block ciphers do permit variable expansion.</p>
+<p id="rfc.section.4.1.p.2">In TLS 1.2, block ciphers allow between 1 and 256 octets of padding.  When a limit lower than the protocol-defined limit is advertised, a second limit applies to the length of records that use block ciphers.  An endpoint MUST NOT add padding to records that would cause the protected record to exceed the size of a protected record that contains the maximum amount of plaintext and the minimum permitted amount of padding.</p>
+<p id="rfc.section.4.1.p.3">For example, TLS_RSA_WITH_AES_128_CBC_SHA has 16 octet blocks and a 20 octet MAC.  Given a record size limit of 256, a record of that length would require a minimum of 11 octets of padding (for <a href="#RFC5246" class="xref">[RFC5246]</a> where the MAC is covered by encryption); or 15 octets if the <samp>encrypt_then_mac</samp> extension <a href="#RFC7366" class="xref">[RFC7366]</a> is negotiated.  With this limit, a record with 250 octets of plaintext could be padded to the same length by including at most 17 octets of padding; or 21 octets with <samp>encrypt_then_mac</samp>.</p>
+<p id="rfc.section.4.1.p.4">An implementation that always adds the minimum amount of padding will always comply with this requirement.</p>
+<h1 id="rfc.section.5">
+<a href="#rfc.section.5">5.</a> <a href="#deprecating-maxfragmentlength" id="deprecating-maxfragmentlength">Deprecating &#8220;max_fragment_length&#8221;</a>
+</h1>
+<p id="rfc.section.5.p.1">The <samp>record_size_limit</samp> extension replaces the <samp>max_fragment_length</samp> extension <a href="#RFC6066" class="xref">[RFC6066]</a>.  A server that supports the <samp>record_size_limit</samp> extension MUST ignore and <samp>max_fragment_length</samp> that appears in a ClientHello if both extensions appear.  A client MUST treat receipt of both <samp>max_fragment_length</samp> and <samp>record_size_limit</samp> as a fatal error, and SHOULD generate an &#8220;illegal_parameter&#8221; alert.</p>
+<p id="rfc.section.5.p.2">Clients that depend on having a small record size MAY continue to advertise the <samp>max_fragment_length</samp>.</p>
+<h1 id="rfc.section.6">
+<a href="#rfc.section.6">6.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
+</h1>
+<p id="rfc.section.6.p.1">Very small record sizes might generate additional work for senders and receivers, limiting throughput and increasing exposure to denial of service.</p>
+<h1 id="rfc.section.7">
+<a href="#rfc.section.7">7.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a>
+</h1>
+<p id="rfc.section.7.p.1">This document registers the <samp>record_size_limit</samp> extension in the TLS &#8220;ExtensionType Values&#8221; registry established in <a href="#RFC5246" class="xref">[RFC5246]</a>. The <samp>record_size_limit</samp> extension has been assigned a code point of TBD; it is recommended and marked as &#8220;Encrypted&#8221; in TLS 1.3.</p>
+<h1 id="rfc.references">
+<a href="#rfc.references">8.</a> References</h1>
+<h2 id="rfc.references.1">
+<a href="#rfc.references.1">8.1.</a> Normative References</h2>
+<table><tbody>
+<tr>
+<td class="reference"><b id="I-D.ietf-tls-tls13">[I-D.ietf-tls-tls13]</b></td>
+<td class="top">
+<a>Rescorla, E.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-tls-tls13-21">The Transport Layer Security (TLS) Protocol Version 1.3</a>", Internet-Draft draft-ietf-tls-tls13-21, July 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC2119">[RFC2119]</b></td>
+<td class="top">
+<a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC5246">[RFC5246]</b></td>
+<td class="top">
+<a>Dierks, T.</a> and <a>E. Rescorla</a>, "<a href="http://tools.ietf.org/html/rfc5246">The Transport Layer Security (TLS) Protocol Version 1.2</a>", RFC 5246, DOI 10.17487/RFC5246, August 2008.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6066">[RFC6066]</b></td>
+<td class="top">
+<a>Eastlake 3rd, D.</a>, "<a href="http://tools.ietf.org/html/rfc6066">Transport Layer Security (TLS) Extensions: Extension Definitions</a>", RFC 6066, DOI 10.17487/RFC6066, January 2011.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7366">[RFC7366]</b></td>
+<td class="top">
+<a>Gutmann, P.</a>, "<a href="http://tools.ietf.org/html/rfc7366">Encrypt-then-MAC for Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)</a>", RFC 7366, DOI 10.17487/RFC7366, September 2014.</td>
+</tr>
+</tbody></table>
+<h2 id="rfc.references.2">
+<a href="#rfc.references.2">8.2.</a> Informative References</h2>
+<table><tbody>
+<tr>
+<td class="reference"><b id="RFC5116">[RFC5116]</b></td>
+<td class="top">
+<a>McGrew, D.</a>, "<a href="http://tools.ietf.org/html/rfc5116">An Interface and Algorithms for Authenticated Encryption</a>", RFC 5116, DOI 10.17487/RFC5116, January 2008.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7925">[RFC7925]</b></td>
+<td class="top">
+<a>Tschofenig, H.</a> and <a>T. Fossati</a>, "<a href="http://tools.ietf.org/html/rfc7925">Transport Layer Security (TLS) / Datagram Transport Layer Security (DTLS) Profiles for the Internet of Things</a>", RFC 7925, DOI 10.17487/RFC7925, July 2016.</td>
+</tr>
+</tbody></table>
+<h1 id="rfc.appendix.A">
+<a href="#rfc.appendix.A">Appendix A.</a> <a href="#acknowledgments" id="acknowledgments">Acknowledgments</a>
+</h1>
+<p id="rfc.section.A.p.1">Thomas Pornin and Hannes Tschofenig provided significant input to this document.</p>
+<h1 id="rfc.authors"><a href="#rfc.authors">Author's Address</a></h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Martin Thomson</span> 
+	  <span class="n hidden">
+		<span class="family-name">Thomson</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Mozilla</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:martin.thomson@gmail.com">martin.thomson@gmail.com</a></span>
+
+  </address>
+</div>
+
+  <div class="github-fork-ribbon-wrapper"><div class="github-fork-ribbon"><a href="https://github.com/tlswg/tls-record-limit">Fork me on GitHub</a></div></div>
+</body>
+</html>
