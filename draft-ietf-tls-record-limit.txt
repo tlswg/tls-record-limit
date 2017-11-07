@@ -4,9 +4,9 @@
 
 TLS                                                           M. Thomson
 Internet-Draft                                                   Mozilla
-Updates: 6066 (if approved)                              October 9, 2017
+Updates: 6066 (if approved)                             November 7, 2017
 Intended status: Standards Track
-Expires: April 12, 2018
+Expires: May 11, 2018
 
 
      Record Size Limit Extension for Transport Layer Security (TLS)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 12, 2018.
+   This Internet-Draft will expire on May 11, 2018.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson                  Expires April 12, 2018                 [Page 1]
+Thomson                   Expires May 11, 2018                  [Page 1]
 
-Internet-Draft              TLS Record Limit                October 2017
+Internet-Draft              TLS Record Limit               November 2017
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -72,10 +72,10 @@ Table of Contents
    6.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
-     8.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
      8.2.  Informative References  . . . . . . . . . . . . . . . . .   7
    Appendix A.  Acknowledgments  . . . . . . . . . . . . . . . . . .   7
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   7
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   8
 
 1.  Introduction
 
@@ -109,14 +109,20 @@ Table of Contents
 
 
 
-Thomson                  Expires April 12, 2018                 [Page 2]
+Thomson                   Expires May 11, 2018                  [Page 2]
 
-Internet-Draft              TLS Record Limit                October 2017
+Internet-Draft              TLS Record Limit               November 2017
 
 
    This document defines a "record_size_limit" extension (Section 4).
    This extension replaces "max_fragment_length" [RFC6066], which this
    document deprecates.  This extension is valid in all versions of TLS.
+
+   A smaller protected record size is just one of many problems that a
+   constrained implementation might need to address.  The
+   "record_size_limit" extension only addresses the memory allocation
+   problem, it does not address limits of code size, or processing and
+   bandwidth capacity.
 
 2.  Conventions and Definitions
 
@@ -156,20 +162,20 @@ Internet-Draft              TLS Record Limit                October 2017
    limit than the one the client offered.  This is a significant problem
    if a server is more constrained than the clients it serves.
 
+
+
+
+Thomson                   Expires May 11, 2018                  [Page 3]
+
+Internet-Draft              TLS Record Limit               November 2017
+
+
    The "max_fragment_length" extension is also ill-suited to cases where
    the capabilities of client and server are asymmetric.  Constraints on
    record size are often receiver constraints.
 
    In comparison, an implementation might be able to send data
    incrementally.  Encryption does not have the same atomicity
-
-
-
-Thomson                  Expires April 12, 2018                 [Page 3]
-
-Internet-Draft              TLS Record Limit                October 2017
-
-
    requirement.  Some ciphers can be encrypted and sent progressively.
    Thus, an endpoint might be willing to send more than its receive
    limit.
@@ -212,20 +218,20 @@ Internet-Draft              TLS Record Limit                October 2017
    defined maximum record size unless explicitly allowed by such a
    future version or extension.
 
+
+
+
+Thomson                   Expires May 11, 2018                  [Page 4]
+
+Internet-Draft              TLS Record Limit               November 2017
+
+
    Even if a larger record size limit is provided by a peer, an endpoint
    MUST NOT send records larger than the protocol-defined limit, unless
    explicitly allowed by a future TLS version or extension.
 
    The record size limit only applies to records sent toward the
    endpoint that advertises the limit.  An endpoint can send records
-
-
-
-Thomson                  Expires April 12, 2018                 [Page 4]
-
-Internet-Draft              TLS Record Limit                October 2017
-
-
    that are larger than the limit it advertises as its own limit.  An
    endpoint that receives a record larger than its advertised limit MUST
    generate a fatal "record_overflow" alert.
@@ -249,6 +255,14 @@ Internet-Draft              TLS Record Limit                October 2017
    records.  This admits the possibility that the extension might not be
    negotiated when a connection is renegotiated or resumed.
 
+   The record size limit can interact with the maximum transmission unit
+   (MTU) in DTLS, but it is a separate and independent constraint on
+   record size.  In particular, it is not appropriate to use the record
+   size limit in place of path MTU detection.  The record size limit is
+   a fixed property of an endpoint that is set during the handshake and
+   fixed thereafter.  In comparison, the MTU is determined by the
+   network path and can change dynamically over time.
+
 4.1.  Record Expansion Limits
 
    The size limit expressed in the "record_size_limit" extension doesn't
@@ -260,6 +274,14 @@ Internet-Draft              TLS Record Limit                October 2017
 
    In TLS 1.2, block ciphers allow between 1 and 256 octets of padding.
    When a limit lower than the protocol-defined limit is advertised, a
+
+
+
+Thomson                   Expires May 11, 2018                  [Page 5]
+
+Internet-Draft              TLS Record Limit               November 2017
+
+
    second limit applies to the length of records that use block ciphers.
    An endpoint MUST NOT add padding to records that would cause the
    protected record to exceed the size of a protected record that
@@ -274,13 +296,6 @@ Internet-Draft              TLS Record Limit                October 2017
    limit, a record with 250 octets of plaintext could be padded to the
    same length by including at most 17 octets of padding; or 21 octets
    with "encrypt_then_mac".
-
-
-
-Thomson                  Expires April 12, 2018                 [Page 5]
-
-Internet-Draft              TLS Record Limit                October 2017
-
 
    An implementation that always adds the minimum amount of padding will
    always comply with this requirement.
@@ -312,6 +327,17 @@ Internet-Draft              TLS Record Limit                October 2017
 
 8.  References
 
+
+
+
+
+
+
+Thomson                   Expires May 11, 2018                  [Page 6]
+
+Internet-Draft              TLS Record Limit               November 2017
+
+
 8.1.  Normative References
 
    [I-D.ietf-tls-tls13]
@@ -328,15 +354,6 @@ Internet-Draft              TLS Record Limit                October 2017
               (TLS) Protocol Version 1.2", RFC 5246,
               DOI 10.17487/RFC5246, August 2008,
               <https://www.rfc-editor.org/info/rfc5246>.
-
-
-
-
-
-Thomson                  Expires April 12, 2018                 [Page 6]
-
-Internet-Draft              TLS Record Limit                October 2017
-
 
    [RFC6066]  Eastlake 3rd, D., "Transport Layer Security (TLS)
               Extensions: Extension Definitions", RFC 6066,
@@ -365,6 +382,18 @@ Appendix A.  Acknowledgments
    Thomas Pornin and Hannes Tschofenig provided significant input to
    this document.
 
+
+
+
+
+
+
+
+Thomson                   Expires May 11, 2018                  [Page 7]
+
+Internet-Draft              TLS Record Limit               November 2017
+
+
 Author's Address
 
    Martin Thomson
@@ -389,4 +418,31 @@ Author's Address
 
 
 
-Thomson                  Expires April 12, 2018                 [Page 7]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Thomson                   Expires May 11, 2018                  [Page 8]
