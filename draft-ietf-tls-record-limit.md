@@ -60,6 +60,11 @@ This document defines a `record_size_limit` extension ({{max-record}}).  This
 extension replaces `max_fragment_length` {{!RFC6066}}, which this document
 deprecates.  This extension is valid in all versions of TLS.
 
+A smaller protected record size is just one of many problems that a constrained
+implementation might need to address.  The `record_size_limit` extension only
+addresses the memory allocation problem, it does not address limits of code
+size, or processing and bandwidth capacity.
+
 
 # Conventions and Definitions
 
@@ -169,6 +174,13 @@ Records are subject to the limits that were set in the handshake that produces
 the keys that are used to protect those records.  This admits the possibility
 that the extension might not be negotiated when a connection is renegotiated or
 resumed.
+
+The record size limit can interact with the maximum transmission unit (MTU)
+in DTLS, but it is a separate and independent constraint on record size.  In
+particular, it is not appropriate to use the record size limit in place of path
+MTU detection.  The record size limit is a fixed property of an endpoint that
+is set during the handshake and fixed thereafter.  In comparison, the MTU is
+determined by the network path and can change dynamically over time.
 
 
 ## Record Expansion Limits {#expansion}
