@@ -1,5 +1,51 @@
 [
   {
+    "url": "https://api.github.com/repos/tlswg/tls-record-limit/issues/12",
+    "repository_url": "https://api.github.com/repos/tlswg/tls-record-limit",
+    "labels_url": "https://api.github.com/repos/tlswg/tls-record-limit/issues/12/labels{/name}",
+    "comments_url": "https://api.github.com/repos/tlswg/tls-record-limit/issues/12/comments",
+    "events_url": "https://api.github.com/repos/tlswg/tls-record-limit/issues/12/events",
+    "html_url": "https://github.com/tlswg/tls-record-limit/issues/12",
+    "id": 270482036,
+    "number": 12,
+    "title": "The maximum for TLS 1.3",
+    "user": {
+      "login": "martinthomson",
+      "id": 67641,
+      "avatar_url": "https://avatars1.githubusercontent.com/u/67641?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/martinthomson",
+      "html_url": "https://github.com/martinthomson",
+      "followers_url": "https://api.github.com/users/martinthomson/followers",
+      "following_url": "https://api.github.com/users/martinthomson/following{/other_user}",
+      "gists_url": "https://api.github.com/users/martinthomson/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/martinthomson/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/martinthomson/subscriptions",
+      "organizations_url": "https://api.github.com/users/martinthomson/orgs",
+      "repos_url": "https://api.github.com/users/martinthomson/repos",
+      "events_url": "https://api.github.com/users/martinthomson/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/martinthomson/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+
+    ],
+    "state": "open",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 0,
+    "created_at": "2017-11-01T23:09:15Z",
+    "updated_at": "2017-11-01T23:09:15Z",
+    "closed_at": null,
+    "author_association": "COLLABORATOR",
+    "body": "In tlswg/tls13-spec#1083 it looks like we're going to have a maximum of 2^14+1 for TLS 1.3.  That will mean different valid maximum values depending on the version.  We should capture the outcome of that discussion."
+  },
+  {
     "url": "https://api.github.com/repos/tlswg/tls-record-limit/issues/11",
     "repository_url": "https://api.github.com/repos/tlswg/tls-record-limit",
     "labels_url": "https://api.github.com/repos/tlswg/tls-record-limit/issues/11/labels{/name}",
@@ -31,7 +77,7 @@
     "labels": [
 
     ],
-    "state": "open",
+    "state": "closed",
     "locked": false,
     "assignee": null,
     "assignees": [
@@ -40,8 +86,8 @@
     "milestone": null,
     "comments": 2,
     "created_at": "2017-09-27T01:14:51Z",
-    "updated_at": "2017-10-09T21:58:47Z",
-    "closed_at": null,
+    "updated_at": "2017-11-07T02:51:39Z",
+    "closed_at": "2017-11-07T02:51:39Z",
     "author_association": "COLLABORATOR",
     "pull_request": {
       "url": "https://api.github.com/repos/tlswg/tls-record-limit/pulls/11",
