@@ -142,11 +142,12 @@ TLSCiphertext.fragment.  Padding added as part of encryption, such as that
 added by a block cipher, is not included in this count (see {{expansion}}).
 
 An endpoint that supports all record sizes can include any limit up to the
-protocol-defined limit for maximum record size.  For TLS 1.3 and earlier, that
-limit is 2^14 octets.  Higher values are currently reserved for future versions
-of the protocol that may allow larger records; an endpoint MUST NOT send a value
-higher than the protocol-defined maximum record size unless explicitly allowed
-by such a future version or extension.
+protocol-defined limit for maximum record size.  For TLS 1.2 and earlier, that
+limit is 2^14 octets.  TLS 1.3 uses a limit of 2^14+1 octets.  Higher values are
+currently reserved for future versions of the protocol that may allow larger
+records; an endpoint MUST NOT send a value higher than the protocol-defined
+maximum record size unless explicitly allowed by such a future version or
+extension.
 
 Even if a larger record size limit is provided by a peer, an endpoint MUST NOT
 send records larger than the protocol-defined limit, unless explicitly allowed
