@@ -2,7 +2,7 @@
 title: Record Size Limit Extension for Transport Layer Security (TLS)
 abbrev: TLS Record Limit
 docname: draft-ietf-tls-record-limit-latest
-date: 2017
+date: {DATE}
 category: std
 updates: 6066
 
