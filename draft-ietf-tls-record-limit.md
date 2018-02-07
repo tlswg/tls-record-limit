@@ -239,6 +239,9 @@ This document registers the `record_size_limit` extension in the TLS
 `record_size_limit` extension has been assigned a code point of TBD; it is
 recommended and marked as "Encrypted" in TLS 1.3.
 
+In the same registry, the `max_fragment_length` \[\[has been|will be]] changed
+to a status of not recommended.
+
 
 --- back
 
