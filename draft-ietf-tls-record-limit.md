@@ -150,7 +150,9 @@ limit is 2^14 octets.  TLS 1.3 uses a limit of 2^14+1 octets.  Higher values are
 currently reserved for future versions of the protocol that may allow larger
 records; an endpoint MUST NOT send a value higher than the protocol-defined
 maximum record size unless explicitly allowed by such a future version or
-extension.
+extension.  A server MUST NOT enforce this restriction; a client might
+advertise a higher limit that is enabled by an extension or version the server
+does not understand.
 
 Even if a larger record size limit is provided by a peer, an endpoint MUST NOT
 send records larger than the protocol-defined limit, unless explicitly allowed
