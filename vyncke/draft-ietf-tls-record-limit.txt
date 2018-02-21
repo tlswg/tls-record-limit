@@ -4,9 +4,9 @@
 
 TLS                                                           M. Thomson
 Internet-Draft                                                   Mozilla
-Updates: 6066 (if approved)                             January 22, 2018
+Updates: 6066 (if approved)                                 February 21,
 Intended status: Standards Track
-Expires: July 26, 2018
+Expires: August 25, 2018
 
 
      Record Size Limit Extension for Transport Layer Security (TLS)
@@ -36,12 +36,12 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 26, 2018.
+   This Internet-Draft will expire on August 25, 2018.
 
 Copyright Notice
 
-   Copyright (c) 2018 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
+   Copyright (c) IETF Trust and the persons identified as the document
+   authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson                   Expires July 26, 2018                 [Page 1]
+Thomson                  Expires August 25, 2018                [Page 1]
 
-Internet-Draft              TLS Record Limit                January 2018
+Internet-Draft              TLS Record Limit                    February
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson                   Expires July 26, 2018                 [Page 2]
+Thomson                  Expires August 25, 2018                [Page 2]
 
-Internet-Draft              TLS Record Limit                January 2018
+Internet-Draft              TLS Record Limit                    February
 
 
    This document defines a "record_size_limit" extension (Section 4).
@@ -165,9 +165,9 @@ Internet-Draft              TLS Record Limit                January 2018
 
 
 
-Thomson                   Expires July 26, 2018                 [Page 3]
+Thomson                  Expires August 25, 2018                [Page 3]
 
-Internet-Draft              TLS Record Limit                January 2018
+Internet-Draft              TLS Record Limit                    February
 
 
    limit than the one the client offered.  This is a significant problem
@@ -221,9 +221,9 @@ Internet-Draft              TLS Record Limit                January 2018
 
 
 
-Thomson                   Expires July 26, 2018                 [Page 4]
+Thomson                  Expires August 25, 2018                [Page 4]
 
-Internet-Draft              TLS Record Limit                January 2018
+Internet-Draft              TLS Record Limit                    February
 
 
    MUST NOT send a value higher than the protocol-defined maximum record
@@ -235,9 +235,11 @@ Internet-Draft              TLS Record Limit                January 2018
 
    The record size limit only applies to records sent toward the
    endpoint that advertises the limit.  An endpoint can send records
-   that are larger than the limit it advertises as its own limit.  An
+   that are larger than the limit it advertises as its own limit.  A TLS
    endpoint that receives a record larger than its advertised limit MUST
-   generate a fatal "record_overflow" alert.
+   generate a fatal "record_overflow" alert; a DTLS endpoint that
+   receives a record larger than its advertised limit MAY either
+   generate a fatal "record_overflow" alert or discard the record.
 
    Clients SHOULD advertise the "record_size_limit" extension, even if
    they have no need to limit the size of records.  This allows servers
@@ -272,15 +274,16 @@ Internet-Draft              TLS Record Limit                January 2018
    account for expansion due to compression or record protection.  It is
    expected that a constrained device will disable compression to avoid
    unpredictable increases in record size.  Stream ciphers and existing
+
+
+
+Thomson                  Expires August 25, 2018                [Page 5]
+
+Internet-Draft              TLS Record Limit                    February
+
+
    AEAD ciphers don't permit variable amounts of expansion, but block
    ciphers do permit variable expansion.
-
-
-
-Thomson                   Expires July 26, 2018                 [Page 5]
-
-Internet-Draft              TLS Record Limit                January 2018
-
 
    In TLS 1.2, block ciphers allow between 1 and 256 octets of padding.
    When a limit lower than the protocol-defined limit is advertised, a
@@ -306,7 +309,7 @@ Internet-Draft              TLS Record Limit                January 2018
 
    The "record_size_limit" extension replaces the "max_fragment_length"
    extension [RFC6066].  A server that supports the "record_size_limit"
-   extension MUST ignore and "max_fragment_length" that appears in a
+   extension MUST ignore any "max_fragment_length" that appears in a
    ClientHello if both extensions appear.  A client MUST treat receipt
    of both "max_fragment_length" and "record_size_limit" as a fatal
    error, and SHOULD generate an "illegal_parameter" alert.
@@ -330,13 +333,13 @@ Internet-Draft              TLS Record Limit                January 2018
 
 
 
-
-
-
-Thomson                   Expires July 26, 2018                 [Page 6]
+Thomson                  Expires August 25, 2018                [Page 6]
 
-Internet-Draft              TLS Record Limit                January 2018
+Internet-Draft              TLS Record Limit                    February
 
+
+   In the same registry, the "max_fragment_length" [[has been|will be]]
+   changed to a status of not recommended.
 
 8.  References
 
@@ -386,12 +389,9 @@ Internet-Draft              TLS Record Limit                January 2018
 
 
 
-
-
-
-Thomson                   Expires July 26, 2018                 [Page 7]
+Thomson                  Expires August 25, 2018                [Page 7]
 
-Internet-Draft              TLS Record Limit                January 2018
+Internet-Draft              TLS Record Limit                    February
 
 
 Appendix A.  Acknowledgments
@@ -445,4 +445,4 @@ Author's Address
 
 
 
-Thomson                   Expires July 26, 2018                 [Page 8]
+Thomson                  Expires August 25, 2018                [Page 8]

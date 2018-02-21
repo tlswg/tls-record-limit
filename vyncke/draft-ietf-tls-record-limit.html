@@ -297,12 +297,12 @@ address {
 <link href="#rfc.authors" rel="Chapter">
 
 
-  <meta name="generator" content="xml2rfc version 2.8.3 - https://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.9.4 - https://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Thomson, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-tls-record-limit-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-1-22" />
+  <meta name="dct.issued" scheme="ISO8601" content="-21" />
   <meta name="dct.abstract" content="An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other." />
   <meta name="description" content="An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other." />
 
@@ -323,14 +323,14 @@ address {
 </tr>
 <tr>
 <td class="left">Updates: 6066 (if approved)</td>
-<td class="right">January 22, 2018</td>
+<td class="right">February 21,</td>
 </tr>
 <tr>
 <td class="left">Intended status: Standards Track</td>
 <td class="right"></td>
 </tr>
 <tr>
-<td class="left">Expires: July 26, 2018</td>
+<td class="left">Expires: August 25, 2018</td>
 <td class="right"></td>
 </tr>
 
@@ -348,9 +348,9 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on July 26, 2018.</p>
+<p>This Internet-Draft will expire on August 25, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
-<p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>Copyright (c)  IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
 
   
@@ -424,7 +424,7 @@ address {
 <p id="rfc.section.4.p.4">This value is the length of the plaintext of a protected record.  The value includes the content type and padding added in TLS 1.3 (that is, the complete length of TLSInnerPlaintext).  In TLS 1.2 and earlier, the limit covers all input to compression and encryption, that is the data that ultimately produces TLSCiphertext.fragment.  Padding added as part of encryption, such as that added by a block cipher, is not included in this count (see <a href="#expansion" class="xref">Section 4.1</a>).</p>
 <p id="rfc.section.4.p.5">An endpoint that supports all record sizes can include any limit up to the protocol-defined limit for maximum record size.  For TLS 1.2 and earlier, that limit is 2^14 octets.  TLS 1.3 uses a limit of 2^14+1 octets.  Higher values are currently reserved for future versions of the protocol that may allow larger records; an endpoint MUST NOT send a value higher than the protocol-defined maximum record size unless explicitly allowed by such a future version or extension.</p>
 <p id="rfc.section.4.p.6">Even if a larger record size limit is provided by a peer, an endpoint MUST NOT send records larger than the protocol-defined limit, unless explicitly allowed by a future TLS version or extension.</p>
-<p id="rfc.section.4.p.7">The record size limit only applies to records sent toward the endpoint that advertises the limit.  An endpoint can send records that are larger than the limit it advertises as its own limit.  An endpoint that receives a record larger than its advertised limit MUST generate a fatal &#8220;record_overflow&#8221; alert.</p>
+<p id="rfc.section.4.p.7">The record size limit only applies to records sent toward the endpoint that advertises the limit.  An endpoint can send records that are larger than the limit it advertises as its own limit.  A TLS endpoint that receives a record larger than its advertised limit MUST generate a fatal &#8220;record_overflow&#8221; alert; a DTLS endpoint that receives a record larger than its advertised limit MAY either generate a fatal &#8220;record_overflow&#8221; alert or discard the record.</p>
 <p id="rfc.section.4.p.8">Clients SHOULD advertise the <samp>record_size_limit</samp> extension, even if they have no need to limit the size of records.  This allows servers to apply a limit at their discretion.  If this extension is not negotiated, endpoints can send records of any size permitted by the protocol or other negotiated extensions.</p>
 <p id="rfc.section.4.p.9">Endpoints MUST NOT send a <samp>record_size_limit</samp> extension with a value smaller than 64.  An endpoint MUST treat receipt of a smaller value as a fatal error and generate an &#8220;illegal_parameter&#8221; alert.</p>
 <p id="rfc.section.4.p.10">In TLS 1.3, the server sends the <samp>record_size_limit</samp> extension in the EncryptedExtensions message.</p>
@@ -440,7 +440,7 @@ address {
 <h1 id="rfc.section.5">
 <a href="#rfc.section.5">5.</a> <a href="#deprecating-maxfragmentlength" id="deprecating-maxfragmentlength">Deprecating &#8220;max_fragment_length&#8221;</a>
 </h1>
-<p id="rfc.section.5.p.1">The <samp>record_size_limit</samp> extension replaces the <samp>max_fragment_length</samp> extension <a href="#RFC6066" class="xref">[RFC6066]</a>.  A server that supports the <samp>record_size_limit</samp> extension MUST ignore and <samp>max_fragment_length</samp> that appears in a ClientHello if both extensions appear.  A client MUST treat receipt of both <samp>max_fragment_length</samp> and <samp>record_size_limit</samp> as a fatal error, and SHOULD generate an &#8220;illegal_parameter&#8221; alert.</p>
+<p id="rfc.section.5.p.1">The <samp>record_size_limit</samp> extension replaces the <samp>max_fragment_length</samp> extension <a href="#RFC6066" class="xref">[RFC6066]</a>.  A server that supports the <samp>record_size_limit</samp> extension MUST ignore any <samp>max_fragment_length</samp> that appears in a ClientHello if both extensions appear.  A client MUST treat receipt of both <samp>max_fragment_length</samp> and <samp>record_size_limit</samp> as a fatal error, and SHOULD generate an &#8220;illegal_parameter&#8221; alert.</p>
 <p id="rfc.section.5.p.2">Clients that depend on having a small record size MAY continue to advertise the <samp>max_fragment_length</samp>.</p>
 <h1 id="rfc.section.6">
 <a href="#rfc.section.6">6.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
@@ -450,6 +450,7 @@ address {
 <a href="#rfc.section.7">7.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a>
 </h1>
 <p id="rfc.section.7.p.1">This document registers the <samp>record_size_limit</samp> extension in the TLS &#8220;ExtensionType Values&#8221; registry established in <a href="#RFC5246" class="xref">[RFC5246]</a>. The <samp>record_size_limit</samp> extension has been assigned a code point of TBD; it is recommended and marked as &#8220;Encrypted&#8221; in TLS 1.3.</p>
+<p id="rfc.section.7.p.2">In the same registry, the <samp>max_fragment_length</samp> [[has been|will be]] changed to a status of not recommended.</p>
 <h1 id="rfc.references">
 <a href="#rfc.references">8.</a> References</h1>
 <h2 id="rfc.references.1">
