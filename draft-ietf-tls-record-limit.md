@@ -33,10 +33,11 @@ This replaces the maximum fragment length extension defined in RFC 6066.
 
 # Introduction
 
-Implementing Transport Layer Security (TLS) {{!I-D.ietf-tls-tls13}} for
-constrained devices can be challenging.  However, recent improvements to the
-design and implementation of cryptographic algorithms have made TLS accessible
-to some highly limited devices (see for example {{?RFC7925}}).
+Implementing Transport Layer Security (TLS) {{!TLS=I-D.ietf-tls-tls13}} or
+Datagram TLS (DTLS) {{?DTLS=RFC6347}} constrained devices can be challenging.
+However, recent improvements to the design and implementation of cryptographic
+algorithms have made TLS accessible to some highly limited devices (see for
+example {{?RFC7925}}).
 
 Receiving large protected records can be particularly difficult for a device
 with limited operating memory.  TLS versions 1.2 and earlier {{?RFC5246}} permit
@@ -180,12 +181,13 @@ the keys that are used to protect those records.  This admits the possibility
 that the extension might not be negotiated when a connection is renegotiated or
 resumed.
 
-The record size limit can interact with the maximum transmission unit (MTU)
-in DTLS, but it is a separate and independent constraint on record size.  In
-particular, it is not appropriate to use the record size limit in place of path
-MTU detection.  The record size limit is a fixed property of an endpoint that
-is set during the handshake and fixed thereafter.  In comparison, the MTU is
-determined by the network path and can change dynamically over time.
+The path maximum transmission unit (PMTU) in DTLS also limits the size of
+records.  The record size limit SHOULD be set independently of PMTU.  The
+record size limit is fixed during the handshake and so is best set based on
+constraints at the endpoint and not the current network environment.  In
+comparison, the PMTU is determined by the network path and can change
+dynamically over time.  See {{?PMTU=RFC8201}} and Section 4.1.1.1 of {{?DTLS}}
+for more detail on PMTU discovery.
 
 
 ## Record Expansion Limits {#expansion}
