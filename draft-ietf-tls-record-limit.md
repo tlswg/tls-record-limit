@@ -240,8 +240,10 @@ receivers, limiting throughput and increasing exposure to denial of service.
 
 This document registers the `record_size_limit` extension in the TLS
 "ExtensionType Values" registry established in {{!RFC5246}}. The
-`record_size_limit` extension has been assigned a code point of TBD; it is
-recommended and marked as "Encrypted" in TLS 1.3.
+`record_size_limit` extension has been assigned a code point of TBD. This entry
+\[\[will be|is]] marked as recommended
+({{?TLS-REGISTRY=I-D.ietf-tls-iana-registry-updates}} and marked as "Encrypted"
+in TLS 1.3 {{?TLS}}.
 
 In the same registry, the `max_fragment_length` \[\[has been|will be]] changed
 to a status of not recommended.
