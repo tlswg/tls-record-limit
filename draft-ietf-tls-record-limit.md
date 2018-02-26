@@ -182,12 +182,16 @@ that the extension might not be negotiated when a connection is renegotiated or
 resumed.
 
 The path maximum transmission unit (PMTU) in DTLS also limits the size of
-records.  The record size limit SHOULD be set independently of PMTU.  The
-record size limit is fixed during the handshake and so is best set based on
-constraints at the endpoint and not the current network environment.  In
-comparison, the PMTU is determined by the network path and can change
-dynamically over time.  See {{?PMTU=RFC8201}} and Section 4.1.1.1 of {{?DTLS}}
-for more detail on PMTU discovery.
+records.  The record size limit does not affect PMTU discovery and SHOULD be
+set independently.  The record size limit is fixed during the handshake and so
+is best set based on constraints at the endpoint and not the current network
+environment.  In comparison, the PMTU is determined by the network path and can
+change dynamically over time.  See {{?PMTU=RFC8201}} and Section 4.1.1.1 of
+{{?DTLS}} for more detail on PMTU discovery.
+
+PMTU governs the size of UDP datagrams, which limits the size of records, but
+does not prevent records from being smaller.  An endpoint that sends small
+records is still able to send multiple records in a single UDP datagram.
 
 
 ## Record Expansion Limits {#expansion}
@@ -253,4 +257,6 @@ to a status of not recommended.
 
 # Acknowledgments
 
-Thomas Pornin and Hannes Tschofenig provided significant input to this document.
+Thomas Pornin and Hannes Tschofenig provided significant input to this
+document.  Alan DeKok identified an issue with the interaction between record
+size limits and PMTU.
