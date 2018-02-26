@@ -302,7 +302,7 @@ address {
 
   <meta name="dct.creator" content="Thomson, M." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-tls-record-limit-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="-23" />
+  <meta name="dct.issued" scheme="ISO8601" content="-26" />
   <meta name="dct.abstract" content="An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other." />
   <meta name="description" content="An extension to Transport Layer Security (TLS) is defined that allows endpoints to negotiate the maximum size of protected records that each will send the other." />
 
@@ -323,14 +323,14 @@ address {
 </tr>
 <tr>
 <td class="left">Updates: 6066 (if approved)</td>
-<td class="right">February 23,</td>
+<td class="right">February 26,</td>
 </tr>
 <tr>
 <td class="left">Intended status: Standards Track</td>
 <td class="right"></td>
 </tr>
 <tr>
-<td class="left">Expires: August 27, 2018</td>
+<td class="left">Expires: August 30, 2018</td>
 <td class="right"></td>
 </tr>
 
@@ -348,7 +348,7 @@ address {
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 27, 2018.</p>
+<p>This Internet-Draft will expire on August 30, 2018.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c)  IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -429,7 +429,8 @@ address {
 <p id="rfc.section.4.p.9">Endpoints MUST NOT send a <samp>record_size_limit</samp> extension with a value smaller than 64.  An endpoint MUST treat receipt of a smaller value as a fatal error and generate an &#8220;illegal_parameter&#8221; alert.</p>
 <p id="rfc.section.4.p.10">In TLS 1.3, the server sends the <samp>record_size_limit</samp> extension in the EncryptedExtensions message.</p>
 <p id="rfc.section.4.p.11">During renegotiation or resumption, the record size limit is renegotiated.  Records are subject to the limits that were set in the handshake that produces the keys that are used to protect those records.  This admits the possibility that the extension might not be negotiated when a connection is renegotiated or resumed.</p>
-<p id="rfc.section.4.p.12">The path maximum transmission unit (PMTU) in DTLS also limits the size of records.  The record size limit SHOULD be set independently of PMTU.  The record size limit is fixed during the handshake and so is best set based on constraints at the endpoint and not the current network environment.  In comparison, the PMTU is determined by the network path and can change dynamically over time.  See <a href="#PMTU" class="xref">[PMTU]</a> and Section 4.1.1.1 of <a href="#DTLS" class="xref">[DTLS]</a> for more detail on PMTU discovery.</p>
+<p id="rfc.section.4.p.12">The path maximum transmission unit (PMTU) in DTLS also limits the size of records.  The record size limit does not affect PMTU discovery and SHOULD be set independently.  The record size limit is fixed during the handshake and so is best set based on constraints at the endpoint and not the current network environment.  In comparison, the PMTU is determined by the network path and can change dynamically over time.  See <a href="#PMTU" class="xref">[PMTU]</a> and Section 4.1.1.1 of <a href="#DTLS" class="xref">[DTLS]</a> for more detail on PMTU discovery.</p>
+<p id="rfc.section.4.p.13">PMTU governs the size of UDP datagrams, which limits the size of records, but does not prevent records from being smaller.  An endpoint that sends small records is still able to send multiple records in a single UDP datagram.</p>
 <h2 id="rfc.section.4.1">
 <a href="#rfc.section.4.1">4.1.</a> <a href="#expansion" id="expansion">Record Expansion Limits</a>
 </h2>
@@ -519,7 +520,7 @@ address {
 <h1 id="rfc.appendix.A">
 <a href="#rfc.appendix.A">Appendix A.</a> <a href="#acknowledgments" id="acknowledgments">Acknowledgments</a>
 </h1>
-<p id="rfc.section.A.p.1">Thomas Pornin and Hannes Tschofenig provided significant input to this document.</p>
+<p id="rfc.section.A.p.1">Thomas Pornin and Hannes Tschofenig provided significant input to this document.  Alan DeKok identified an issue with the interaction between record size limits and PMTU.</p>
 <h1 id="rfc.authors"><a href="#rfc.authors">Author's Address</a></h1>
 <div class="avoidbreak">
   <address class="vcard">
