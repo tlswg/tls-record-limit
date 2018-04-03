@@ -243,11 +243,13 @@ Internet-Draft              TLS Record Limit                  April 2018
    receives a record larger than its advertised limit MAY either
    generate a fatal "record_overflow" alert or discard the record.
 
-   Clients SHOULD advertise the "record_size_limit" extension, even if
-   they have no need to limit the size of records.  This allows servers
-   to advertise a limit at their discretion.  If this extension is not
-   negotiated, endpoints can send records of any size permitted by the
-   protocol or other negotiated extensions.
+   Endpoints SHOULD advertise the "record_size_limit" extension, even if
+   they have no need to limit the size of records.  For clients, this
+   allows servers to advertise a limit at their discretion.  For
+   servers, this allows clients to know that their limit will be
+   respected.  If this extension is not negotiated, endpoints can send
+   records of any size permitted by the protocol or other negotiated
+   extensions.
 
    Endpoints MUST NOT send a "record_size_limit" extension with a value
    smaller than 64.  An endpoint MUST treat receipt of a smaller value
@@ -271,8 +273,6 @@ Internet-Draft              TLS Record Limit                  April 2018
    over time.  See [PMTU] and Section 4.1.1.1 of [DTLS] for more detail
    on PMTU discovery.
 
-   PMTU governs the size of UDP datagrams, which limits the size of
-   records, but does not prevent records from being smaller.  An
 
 
 
@@ -282,6 +282,8 @@ Thomson                  Expires October 5, 2018                [Page 5]
 Internet-Draft              TLS Record Limit                  April 2018
 
 
+   PMTU governs the size of UDP datagrams, which limits the size of
+   records, but does not prevent records from being smaller.  An
    endpoint that sends small records is still able to send multiple
    records in a single UDP datagram.
 
@@ -325,8 +327,6 @@ Internet-Draft              TLS Record Limit                  April 2018
 
    Clients that depend on having a small record size MAY continue to
    advertise the "max_fragment_length".
-
-
 
 
 
