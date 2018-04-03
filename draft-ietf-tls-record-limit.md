@@ -227,7 +227,7 @@ comply with this requirement.
 
 The `record_size_limit` extension replaces the `max_fragment_length` extension
 {{!RFC6066}}.  A server that supports the `record_size_limit` extension MUST
-ignore and `max_fragment_length` that appears in a ClientHello if both
+ignore a `max_fragment_length` that appears in a ClientHello if both
 extensions appear.  A client MUST treat receipt of both `max_fragment_length`
 and `record_size_limit` as a fatal error, and SHOULD generate an
 "illegal_parameter" alert.
