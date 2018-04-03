@@ -4,9 +4,9 @@
 
 TLS                                                           M. Thomson
 Internet-Draft                                                   Mozilla
-Updates: 6066 (if approved)                                March 6, 2018
+Updates: 6066 (if approved)                                April 3, 2018
 Intended status: Standards Track
-Expires: September 7, 2018
+Expires: October 5, 2018
 
 
      Record Size Limit Extension for Transport Layer Security (TLS)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 7, 2018.
+   This Internet-Draft will expire on October 5, 2018.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Thomson                 Expires September 7, 2018               [Page 1]
+Thomson                  Expires October 5, 2018                [Page 1]
 
-Internet-Draft              TLS Record Limit                  March 2018
+Internet-Draft              TLS Record Limit                  April 2018
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -93,12 +93,12 @@ Table of Contents
    the allowance for expansion to 256 octets.  Allocating up to 18K of
    memory for ciphertext is beyond the capacity of some implementations.
 
-   An Authentication Encryption with Additional Data (AEAD) ciphers (see
+   An Authentication Encryption with Additional Data (AEAD) cipher (see
    [RFC5116]) API requires that an entire record be present to decrypt
    and authenticate it.  Similarly, other ciphers cannot produce
-   authenticated data until the entire record is present.  Thus,
-   incremental processing of records minimally exposes endpoints to the
-   risk of forged data.
+   authenticated data until the entire record is present.  Incremental
+   processing of records could expose endpoints to the risk of forged
+   data.
 
    The "max_fragment_length" extension [RFC6066] was designed to enable
    constrained clients to negotiate a lower record size.  However,
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Thomson                 Expires September 7, 2018               [Page 2]
+Thomson                  Expires October 5, 2018                [Page 2]
 
-Internet-Draft              TLS Record Limit                  March 2018
+Internet-Draft              TLS Record Limit                  April 2018
 
 
    This document defines a "record_size_limit" extension (Section 4).
@@ -165,9 +165,9 @@ Internet-Draft              TLS Record Limit                  March 2018
 
 
 
-Thomson                 Expires September 7, 2018               [Page 3]
+Thomson                  Expires October 5, 2018                [Page 3]
 
-Internet-Draft              TLS Record Limit                  March 2018
+Internet-Draft              TLS Record Limit                  April 2018
 
 
    limit than the one the client offered.  This is a significant problem
@@ -221,9 +221,9 @@ Internet-Draft              TLS Record Limit                  March 2018
 
 
 
-Thomson                 Expires September 7, 2018               [Page 4]
+Thomson                  Expires October 5, 2018                [Page 4]
 
-Internet-Draft              TLS Record Limit                  March 2018
+Internet-Draft              TLS Record Limit                  April 2018
 
 
    size unless explicitly allowed by such a future version or extension.
@@ -245,7 +245,7 @@ Internet-Draft              TLS Record Limit                  March 2018
 
    Clients SHOULD advertise the "record_size_limit" extension, even if
    they have no need to limit the size of records.  This allows servers
-   to apply a limit at their discretion.  If this extension is not
+   to advertise a limit at their discretion.  If this extension is not
    negotiated, endpoints can send records of any size permitted by the
    protocol or other negotiated extensions.
 
@@ -277,9 +277,9 @@ Internet-Draft              TLS Record Limit                  March 2018
 
 
 
-Thomson                 Expires September 7, 2018               [Page 5]
+Thomson                  Expires October 5, 2018                [Page 5]
 
-Internet-Draft              TLS Record Limit                  March 2018
+Internet-Draft              TLS Record Limit                  April 2018
 
 
    endpoint that sends small records is still able to send multiple
@@ -318,7 +318,7 @@ Internet-Draft              TLS Record Limit                  March 2018
 
    The "record_size_limit" extension replaces the "max_fragment_length"
    extension [RFC6066].  A server that supports the "record_size_limit"
-   extension MUST ignore and "max_fragment_length" that appears in a
+   extension MUST ignore a "max_fragment_length" that appears in a
    ClientHello if both extensions appear.  A client MUST treat receipt
    of both "max_fragment_length" and "record_size_limit" as a fatal
    error, and SHOULD generate an "illegal_parameter" alert.
@@ -333,9 +333,9 @@ Internet-Draft              TLS Record Limit                  March 2018
 
 
 
-Thomson                 Expires September 7, 2018               [Page 6]
+Thomson                  Expires October 5, 2018                [Page 6]
 
-Internet-Draft              TLS Record Limit                  March 2018
+Internet-Draft              TLS Record Limit                  April 2018
 
 
 6.  Security Considerations
@@ -389,9 +389,9 @@ Internet-Draft              TLS Record Limit                  March 2018
 
 
 
-Thomson                 Expires September 7, 2018               [Page 7]
+Thomson                  Expires October 5, 2018                [Page 7]
 
-Internet-Draft              TLS Record Limit                  March 2018
+Internet-Draft              TLS Record Limit                  April 2018
 
 
 8.2.  Informative References
@@ -445,4 +445,4 @@ Author's Address
 
 
 
-Thomson                 Expires September 7, 2018               [Page 8]
+Thomson                  Expires October 5, 2018                [Page 8]
