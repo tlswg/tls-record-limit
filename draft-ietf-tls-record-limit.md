@@ -47,11 +47,11 @@ only 16 octets).  TLS 1.3 reduces the allowance for expansion to 256 octets.
 Allocating up to 18K of memory for ciphertext is beyond the capacity of some
 implementations.
 
-An Authentication Encryption with Additional Data (AEAD) ciphers (see
+An Authentication Encryption with Additional Data (AEAD) cipher (see
 {{?RFC5116}}) API requires that an entire record be present to decrypt and
 authenticate it.  Similarly, other ciphers cannot produce authenticated data
-until the entire record is present.  Thus, incremental processing of records
-minimally exposes endpoints to the risk of forged data.
+until the entire record is present.  Incremental processing of records
+could expose endpoints to the risk of forged data.
 
 The `max_fragment_length` extension {{?RFC6066}} was designed to enable
 constrained clients to negotiate a lower record size.  However,
@@ -166,7 +166,7 @@ a DTLS endpoint that receives a record larger than its advertised limit MAY
 either generate a fatal "record_overflow" alert or discard the record.
 
 Clients SHOULD advertise the `record_size_limit` extension, even if they have no
-need to limit the size of records.  This allows servers to apply a limit at
+need to limit the size of records.  This allows servers to advertise a limit at
 their discretion.  If this extension is not negotiated, endpoints can send
 records of any size permitted by the protocol or other negotiated extensions.
 
