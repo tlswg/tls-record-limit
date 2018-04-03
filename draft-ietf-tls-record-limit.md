@@ -165,10 +165,12 @@ larger than its advertised limit MUST generate a fatal "record_overflow" alert;
 a DTLS endpoint that receives a record larger than its advertised limit MAY
 either generate a fatal "record_overflow" alert or discard the record.
 
-Clients SHOULD advertise the `record_size_limit` extension, even if they have no
-need to limit the size of records.  This allows servers to advertise a limit at
-their discretion.  If this extension is not negotiated, endpoints can send
-records of any size permitted by the protocol or other negotiated extensions.
+Endpoints SHOULD advertise the `record_size_limit` extension, even if they have
+no need to limit the size of records.  For clients, this allows servers to
+advertise a limit at their discretion.  For servers, this allows clients to know
+that their limit will be respected.  If this extension is not negotiated,
+endpoints can send records of any size permitted by the protocol or other
+negotiated extensions.
 
 Endpoints MUST NOT send a `record_size_limit` extension with a value smaller
 than 64.  An endpoint MUST treat receipt of a smaller value as a fatal error and
