@@ -152,7 +152,9 @@ records; an endpoint MUST NOT send a value higher than the protocol-defined
 maximum record size unless explicitly allowed by such a future version or
 extension.  A server MUST NOT enforce this restriction; a client might
 advertise a higher limit that is enabled by an extension or version the server
-does not understand.
+does not understand.  A client MAY abort the handshake with an illegal_parameter
+alert if the record_size_limit extension includes a value greater than the
+maximum record size permitted by the negotiated protocol version and extensions.
 
 Even if a larger record size limit is provided by a peer, an endpoint MUST NOT
 send records larger than the protocol-defined limit, unless explicitly allowed
