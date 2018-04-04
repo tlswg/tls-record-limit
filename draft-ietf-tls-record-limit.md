@@ -206,9 +206,9 @@ constrained device will disable compression to avoid unpredictable increases in
 record size.  Stream ciphers and existing AEAD ciphers don't permit variable
 amounts of expansion, but block ciphers do permit variable expansion.
 
-In TLS 1.2, block ciphers allow between 1 and 256 octets of padding.  When a
-limit lower than the protocol-defined limit is advertised, a second limit
-applies to the length of records that use block ciphers.  An endpoint MUST NOT
+In TLS 1.2, block ciphers allow from 1 to 256 octets of padding.  When a limit
+lower than the protocol-defined limit is advertised, a second limit applies to
+the length of records that use block ciphers.  An endpoint MUST NOT
 add padding to records that would cause the protected record to exceed the size
 of a protected record that contains the maximum amount of plaintext and the
 minimum permitted amount of padding.
