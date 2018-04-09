@@ -229,7 +229,10 @@ Internet-Draft              TLS Record Limit                  April 2018
    size unless explicitly allowed by such a future version or extension.
    A server MUST NOT enforce this restriction; a client might advertise
    a higher limit that is enabled by an extension or version the server
-   does not understand.
+   does not understand.  A client MAY abort the handshake with an
+   illegal_parameter alert if the record_size_limit extension includes a
+   value greater than the maximum record size permitted by the
+   negotiated protocol version and extensions.
 
    Even if a larger record size limit is provided by a peer, an endpoint
    MUST NOT send records larger than the protocol-defined limit, unless
@@ -270,9 +273,6 @@ Internet-Draft              TLS Record Limit                  April 2018
    fixed during the handshake and so is best set based on constraints at
    the endpoint and not the current network environment.  In comparison,
    the PMTU is determined by the network path and can change dynamically
-   over time.  See [PMTU] and Section 4.1.1.1 of [DTLS] for more detail
-   on PMTU discovery.
-
 
 
 
@@ -281,6 +281,9 @@ Thomson                 Expires October 11, 2018                [Page 5]
 
 Internet-Draft              TLS Record Limit                  April 2018
 
+
+   over time.  See [PMTU] and Section 4.1.1.1 of [DTLS] for more detail
+   on PMTU discovery.
 
    PMTU governs the size of UDP datagrams, which limits the size of
    records, but does not prevent records from being smaller.  An
@@ -296,7 +299,7 @@ Internet-Draft              TLS Record Limit                  April 2018
    AEAD ciphers don't permit variable amounts of expansion, but block
    ciphers do permit variable expansion.
 
-   In TLS 1.2, block ciphers allow between 1 and 256 octets of padding.
+   In TLS 1.2, block ciphers allow from 1 to 256 octets of padding.
    When a limit lower than the protocol-defined limit is advertised, a
    second limit applies to the length of records that use block ciphers.
    An endpoint MUST NOT add padding to records that would cause the
@@ -327,9 +330,6 @@ Internet-Draft              TLS Record Limit                  April 2018
 
    Clients that depend on having a small record size MAY continue to
    advertise the "max_fragment_length".
-
-
-
 
 
 
