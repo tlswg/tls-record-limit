@@ -33,10 +33,11 @@ This replaces the maximum fragment length extension defined in RFC 6066.
 
 # Introduction
 
-Implementing Transport Layer Security (TLS) {{!I-D.ietf-tls-tls13}} for
-constrained devices can be challenging.  However, recent improvements to the
-design and implementation of cryptographic algorithms have made TLS accessible
-to some highly limited devices (see for example {{?RFC7925}}).
+Implementing Transport Layer Security (TLS) {{!TLS=I-D.ietf-tls-tls13}} or
+Datagram TLS (DTLS) {{?DTLS=RFC6347}} constrained devices can be challenging.
+However, recent improvements to the design and implementation of cryptographic
+algorithms have made TLS accessible to some highly limited devices (see for
+example {{?RFC7925}}).
 
 Receiving large protected records can be particularly difficult for a device
 with limited operating memory.  TLS versions 1.2 and earlier {{?RFC5246}} permit
@@ -46,11 +47,11 @@ only 16 octets).  TLS 1.3 reduces the allowance for expansion to 256 octets.
 Allocating up to 18K of memory for ciphertext is beyond the capacity of some
 implementations.
 
-An Authentication Encryption with Additional Data (AEAD) ciphers (see
+An Authentication Encryption with Additional Data (AEAD) cipher (see
 {{?RFC5116}}) API requires that an entire record be present to decrypt and
 authenticate it.  Similarly, other ciphers cannot produce authenticated data
-until the entire record is present.  Thus, incremental processing of records
-minimally exposes endpoints to the risk of forged data.
+until the entire record is present.  Incremental processing of records
+could expose endpoints to the risk of forged data.
 
 The `max_fragment_length` extension {{?RFC6066}} was designed to enable
 constrained clients to negotiate a lower record size.  However,
@@ -133,8 +134,8 @@ into records.
 
 When the `record_size_limit` extension is negotiated, an endpoint MUST NOT
 generate a protected record with plaintext that is larger than the
-RecordSizeLimit value it receives from its peer.  Unprotected messages -
-handshake messages in particular - are not subject to this limit.
+RecordSizeLimit value it receives from its peer.  Unprotected messages are not
+subject to this limit.
 
 This value is the length of the plaintext of a protected record.  The value
 includes the content type and padding added in TLS 1.3 (that is, the complete
@@ -151,7 +152,9 @@ records; an endpoint MUST NOT send a value higher than the protocol-defined
 maximum record size unless explicitly allowed by such a future version or
 extension.  A server MUST NOT enforce this restriction; a client might
 advertise a higher limit that is enabled by an extension or version the server
-does not understand.
+does not understand.  A client MAY abort the handshake with an illegal_parameter
+alert if the record_size_limit extension includes a value greater than the
+maximum record size permitted by the negotiated protocol version and extensions.
 
 Even if a larger record size limit is provided by a peer, an endpoint MUST NOT
 send records larger than the protocol-defined limit, unless explicitly allowed
@@ -164,10 +167,12 @@ larger than its advertised limit MUST generate a fatal "record_overflow" alert;
 a DTLS endpoint that receives a record larger than its advertised limit MAY
 either generate a fatal "record_overflow" alert or discard the record.
 
-Clients SHOULD advertise the `record_size_limit` extension, even if they have no
-need to limit the size of records.  This allows servers to apply a limit at
-their discretion.  If this extension is not negotiated, endpoints can send
-records of any size permitted by the protocol or other negotiated extensions.
+Endpoints SHOULD advertise the `record_size_limit` extension, even if they have
+no need to limit the size of records.  For clients, this allows servers to
+advertise a limit at their discretion.  For servers, this allows clients to know
+that their limit will be respected.  If this extension is not negotiated,
+endpoints can send records of any size permitted by the protocol or other
+negotiated extensions.
 
 Endpoints MUST NOT send a `record_size_limit` extension with a value smaller
 than 64.  An endpoint MUST treat receipt of a smaller value as a fatal error and
@@ -182,12 +187,17 @@ the keys that are used to protect those records.  This admits the possibility
 that the extension might not be negotiated when a connection is renegotiated or
 resumed.
 
-The record size limit can interact with the maximum transmission unit (MTU)
-in DTLS, but it is a separate and independent constraint on record size.  In
-particular, it is not appropriate to use the record size limit in place of path
-MTU detection.  The record size limit is a fixed property of an endpoint that
-is set during the handshake and fixed thereafter.  In comparison, the MTU is
-determined by the network path and can change dynamically over time.
+The path maximum transmission unit (PMTU) in DTLS also limits the size of
+records.  The record size limit does not affect PMTU discovery and SHOULD be
+set independently.  The record size limit is fixed during the handshake and so
+is best set based on constraints at the endpoint and not the current network
+environment.  In comparison, the PMTU is determined by the network path and can
+change dynamically over time.  See {{?PMTU=RFC8201}} and Section 4.1.1.1 of
+{{?DTLS}} for more detail on PMTU discovery.
+
+PMTU governs the size of UDP datagrams, which limits the size of records, but
+does not prevent records from being smaller.  An endpoint that sends small
+records is still able to send multiple records in a single UDP datagram.
 
 
 ## Record Expansion Limits {#expansion}
@@ -198,9 +208,9 @@ constrained device will disable compression to avoid unpredictable increases in
 record size.  Stream ciphers and existing AEAD ciphers don't permit variable
 amounts of expansion, but block ciphers do permit variable expansion.
 
-In TLS 1.2, block ciphers allow between 1 and 256 octets of padding.  When a
-limit lower than the protocol-defined limit is advertised, a second limit
-applies to the length of records that use block ciphers.  An endpoint MUST NOT
+In TLS 1.2, block ciphers allow from 1 to 256 octets of padding.  When a limit
+lower than the protocol-defined limit is advertised, a second limit applies to
+the length of records that use block ciphers.  An endpoint MUST NOT
 add padding to records that would cause the protected record to exceed the size
 of a protected record that contains the maximum amount of plaintext and the
 minimum permitted amount of padding.
@@ -221,7 +231,7 @@ comply with this requirement.
 
 The `record_size_limit` extension replaces the `max_fragment_length` extension
 {{!RFC6066}}.  A server that supports the `record_size_limit` extension MUST
-ignore and `max_fragment_length` that appears in a ClientHello if both
+ignore a `max_fragment_length` that appears in a ClientHello if both
 extensions appear.  A client MUST treat receipt of both `max_fragment_length`
 and `record_size_limit` as a fatal error, and SHOULD generate an
 "illegal_parameter" alert.
@@ -240,8 +250,10 @@ receivers, limiting throughput and increasing exposure to denial of service.
 
 This document registers the `record_size_limit` extension in the TLS
 "ExtensionType Values" registry established in {{!RFC5246}}. The
-`record_size_limit` extension has been assigned a code point of TBD; it is
-recommended and marked as "Encrypted" in TLS 1.3.
+`record_size_limit` extension has been assigned a code point of TBD. This entry
+\[\[will be|is]] marked as recommended
+({{?TLS-REGISTRY=I-D.ietf-tls-iana-registry-updates}} and marked as "Encrypted"
+in TLS 1.3 {{?TLS}}.
 
 In the same registry, the `max_fragment_length` \[\[has been|will be]] changed
 to a status of not recommended.
@@ -251,4 +263,6 @@ to a status of not recommended.
 
 # Acknowledgments
 
-Thomas Pornin and Hannes Tschofenig provided significant input to this document.
+Thomas Pornin and Hannes Tschofenig provided significant input to this
+document.  Alan DeKok identified an issue with the interaction between record
+size limits and PMTU.
