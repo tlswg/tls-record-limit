@@ -4,9 +4,9 @@
 
 TLS                                                           M. Thomson
 Internet-Draft                                                   Mozilla
-Updates: 6066 (if approved)                                April 3, 2018
+Updates: 6066 (if approved)                                April 9, 2018
 Intended status: Standards Track
-Expires: October 5, 2018
+Expires: October 11, 2018
 
 
      Record Size Limit Extension for Transport Layer Security (TLS)
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 5, 2018.
+   This Internet-Draft will expire on October 11, 2018.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Thomson                  Expires October 5, 2018                [Page 1]
+Thomson                 Expires October 11, 2018                [Page 1]
 
 Internet-Draft              TLS Record Limit                  April 2018
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Thomson                  Expires October 5, 2018                [Page 2]
+Thomson                 Expires October 11, 2018                [Page 2]
 
 Internet-Draft              TLS Record Limit                  April 2018
 
@@ -165,7 +165,7 @@ Internet-Draft              TLS Record Limit                  April 2018
 
 
 
-Thomson                  Expires October 5, 2018                [Page 3]
+Thomson                 Expires October 11, 2018                [Page 3]
 
 Internet-Draft              TLS Record Limit                  April 2018
 
@@ -221,7 +221,7 @@ Internet-Draft              TLS Record Limit                  April 2018
 
 
 
-Thomson                  Expires October 5, 2018                [Page 4]
+Thomson                 Expires October 11, 2018                [Page 4]
 
 Internet-Draft              TLS Record Limit                  April 2018
 
@@ -277,7 +277,7 @@ Internet-Draft              TLS Record Limit                  April 2018
 
 
 
-Thomson                  Expires October 5, 2018                [Page 5]
+Thomson                 Expires October 11, 2018                [Page 5]
 
 Internet-Draft              TLS Record Limit                  April 2018
 
@@ -333,7 +333,7 @@ Internet-Draft              TLS Record Limit                  April 2018
 
 
 
-Thomson                  Expires October 5, 2018                [Page 6]
+Thomson                 Expires October 11, 2018                [Page 6]
 
 Internet-Draft              TLS Record Limit                  April 2018
 
@@ -389,7 +389,7 @@ Internet-Draft              TLS Record Limit                  April 2018
 
 
 
-Thomson                  Expires October 5, 2018                [Page 7]
+Thomson                 Expires October 11, 2018                [Page 7]
 
 Internet-Draft              TLS Record Limit                  April 2018
 
@@ -445,4 +445,4 @@ Author's Address
 
 
 
-Thomson                  Expires October 5, 2018                [Page 8]
+Thomson                 Expires October 11, 2018                [Page 8]
